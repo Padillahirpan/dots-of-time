@@ -1,0 +1,574 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dots of Time — Week View &amp; Category Water Indicators</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: DM Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim as mandated -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "surface-container-low": "#f4f2fc",
+            "on-surface": "#1a1b22",
+            "background": "#fbf8ff",
+            "on-primary-fixed-variant": "#003bae",
+            "surface-bright": "#fbf8ff",
+            "on-primary-fixed": "#00164e",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#f1f0f9",
+            "tertiary-fixed-dim": "#fabc48",
+            "on-tertiary-container": "#fffbff",
+            "secondary-container": "#89f9b0",
+            "border-line": "#dcdad4",
+            "tertiary": "#7a5500",
+            "inverse-surface": "#2f3037",
+            "primary-fixed": "#dce1ff",
+            "area-money": "#d49b28",
+            "outline": "#747685",
+            "surface-tint": "#2654ce",
+            "on-primary-container": "#fffbff",
+            "secondary-fixed": "#89f9b0",
+            "on-error": "#ffffff",
+            "on-background": "#1a1b22",
+            "surface-container-high": "#e9e7f0",
+            "on-tertiary-fixed-variant": "#5f4100",
+            "surface-variant": "#e3e1eb",
+            "inverse-primary": "#b5c4ff",
+            "on-secondary-container": "#007440",
+            "fg-muted": "#6c6c74",
+            "surface-dim": "#dad9e2",
+            "secondary": "#006d3c",
+            "outline-variant": "#c4c5d6",
+            "on-tertiary-fixed": "#271900",
+            "surface-panel": "#ffffff",
+            "surface-container": "#eeedf6",
+            "on-tertiary": "#ffffff",
+            "fg-primary": "#1b1b1f",
+            "bg-canvas": "#f6f5f2",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#9a6c00",
+            "primary": "#2352cb",
+            "area-life": "#2fa464",
+            "on-secondary-fixed": "#00210e",
+            "area-career": "#5078f2",
+            "primary-fixed-dim": "#b5c4ff",
+            "tertiary-fixed": "#ffdeaa",
+            "surface-container-highest": "#e3e1eb",
+            "secondary-fixed-dim": "#6ddc96",
+            "on-secondary-fixed-variant": "#00522c",
+            "surface": "#fbf8ff",
+            "on-surface-variant": "#434654",
+            "primary-container": "#436ce5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-md": "0.875rem",
+            "space-xl": "1.25rem",
+            "margin": "1rem",
+            "space-lg": "1.125rem",
+            "space-xs": "0.25rem",
+            "gutter": "0.5rem"
+          },
+          "fontFamily": {
+            "display-percent": [
+              "DM Sans"
+            ],
+            "title-section": [
+              "DM Sans"
+            ],
+            "body-md": [
+              "DM Sans"
+            ],
+            "caption": [
+              "DM Sans"
+            ],
+            "input-base": [
+              "DM Sans"
+            ],
+            "headline-sm": [
+              "DM Sans"
+            ],
+            "label-sm": [
+              "DM Sans"
+            ]
+          },
+          "fontSize": {
+            "display-percent": [
+              "34px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "500"
+              }
+            ],
+            "title-section": [
+              "15px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "500"
+              }
+            ],
+            "body-md": [
+              "14.5px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "400"
+              }
+            ],
+            "caption": [
+              "12px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "input-base": [
+              "16px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-sm": [
+              "20px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "500"
+              }
+            ],
+            "label-sm": [
+              "13px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+
+    /* Ambient pulse on today's active dot */
+    @keyframes subtlePulse {
+      0%, 100% {
+        box-shadow: 0 0 0 3px rgba(80, 120, 242, 0.25);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(80, 120, 242, 0.08);
+      }
+    }
+    .pulse-ring {
+      animation: subtlePulse 3s ease-in-out infinite;
+    }
+
+    /* Liquid wave meniscus decoration */
+    .liquid-wave {
+      position: absolute;
+      top: -6px;
+      left: 0;
+      width: 200%;
+      height: 8px;
+      background: radial-gradient(circle at 50% 100%, transparent 6px, currentColor 7px);
+      background-size: 16px 8px;
+      opacity: 0.18;
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-fg-primary min-h-screen antialiased font-body-md text-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- ========================================================= -->
+<!-- Top Navigation Header (from Shared Components JSON)      -->
+<!-- ========================================================= -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-border-line dark:border-outline-variant w-full sticky top-0 z-30">
+<div class="flex justify-between items-center w-full px-margin max-w-[720px] mx-auto h-14">
+<!-- Brand Anchor -->
+<div class="flex items-center gap-2">
+<a class="text-headline-sm font-headline-sm font-medium text-fg-primary dark:text-inverse-on-surface tracking-tight flex items-center gap-2" href="#">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-area-career"></span>
+<span>Dots of Time</span>
+</a>
+<span class="text-caption font-caption text-fg-muted dark:text-outline hidden sm:inline-block">· Week 42</span>
+</div>
+<!-- Navigation Links -->
+<nav aria-label="Granularity view switcher" class="flex items-center space-x-6 text-label-sm font-label-sm">
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Day</a>
+<!-- ACTIVE TAB: Week (Mandated exact style from style_active_navigation) -->
+<a aria-current="page" class="text-area-career dark:text-primary-fixed border-b-2 border-area-career dark:border-primary-fixed pb-1 font-medium" href="#">Week</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Month</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Year</a>
+</nav>
+<!-- Trailing Action Icons -->
+<div class="flex items-center space-x-1">
+<button aria-label="Calendar Today" class="w-9 h-9 flex items-center justify-center rounded-lg text-fg-muted hover:text-fg-primary hover:bg-surface-container-low transition-colors duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</button>
+<button aria-label="Settings" class="w-9 h-9 flex items-center justify-center rounded-lg text-fg-muted hover:text-fg-primary hover:bg-surface-container-low transition-colors duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-px h-4 bg-border-line mx-1"></div>
+<button aria-label="User avatar" class="w-7 h-7 rounded-full bg-surface-container border border-border-line flex items-center justify-center text-label-sm font-medium text-fg-primary ml-1 overflow-hidden" type="button">
+<span class="text-[11px]">SC</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ========================================================= -->
+<!-- Main Centered Canvas (Constrained to max-w-[720px])       -->
+<!-- ========================================================= -->
+<main class="max-w-[720px] mx-auto px-margin pt-5 pb-12 space-y-6">
+<!-- 1. Time Header & Percent Display Block -->
+<section class="bg-surface-panel border border-border-line rounded-xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<div class="flex items-center gap-1.5 text-caption font-caption text-fg-muted uppercase tracking-wider mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career"></span>
+<span>THIS WEEK · OCTOBER 12–18, 2026</span>
+</div>
+<h1 class="text-headline-sm font-headline-sm text-fg-primary font-medium tracking-tight">
+          Friday, Oct 16 · Day 5 of 7
+        </h1>
+<p class="text-caption font-caption text-fg-muted mt-0.5">
+          Natural work cycle pacing · Friday focus wrap &amp; weekend buffer
+        </p>
+</div>
+<!-- Large Tabular Metric -->
+<div class="sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-border-line w-full sm:w-auto flex sm:flex-col justify-between items-baseline sm:items-end">
+<div class="text-display-percent font-display-percent text-fg-primary font-medium tabular-nums tracking-tight">
+          68.5%
+        </div>
+<div class="text-caption font-caption text-fg-muted tracking-normal">
+          week elapsed
+        </div>
+</div>
+</section>
+<!-- 2. Cadence Grid (7-Day Row) -->
+<section class="bg-surface-panel border border-border-line rounded-xl p-5">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="text-title-section font-title-section text-fg-primary">Cadence Grid</h2>
+<p class="text-caption font-caption text-fg-muted">Monday start · 7 days cadence</p>
+</div>
+<span class="text-caption font-caption px-2 py-0.5 bg-surface-container rounded-md text-fg-muted border border-border-line">
+          Week 42 of 52
+        </span>
+</div>
+<!-- 7-Day Dots Container (7 columns, 10px gap as prescribed) -->
+<div class="grid grid-cols-7 gap-[10px] my-3 max-w-[560px] mx-auto py-2">
+<!-- Day 1: Mo (12) - Passed -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">Mo</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-area-career border-[1.5px] border-area-career flex items-center justify-center text-on-primary text-label-sm font-medium transition-transform group-hover:scale-105" data-passed="true" title="Monday, Oct 12 · Completed">
+            12
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">passed</span>
+</div>
+<!-- Day 2: Tu (13) - Passed -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">Tu</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-area-career border-[1.5px] border-area-career flex items-center justify-center text-on-primary text-label-sm font-medium transition-transform group-hover:scale-105" data-passed="true" title="Tuesday, Oct 13 · Completed">
+            13
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">passed</span>
+</div>
+<!-- Day 3: We (14) - Passed -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">We</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-area-career border-[1.5px] border-area-career flex items-center justify-center text-on-primary text-label-sm font-medium transition-transform group-hover:scale-105" data-passed="true" title="Wednesday, Oct 14 · Completed">
+            14
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">passed</span>
+</div>
+<!-- Day 4: Th (15) - Passed -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">Th</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-area-career border-[1.5px] border-area-career flex items-center justify-center text-on-primary text-label-sm font-medium transition-transform group-hover:scale-105" data-passed="true" title="Thursday, Oct 15 · Completed">
+            15
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">passed</span>
+</div>
+<!-- Day 5: Fr (16) - Current Day (Today) -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-area-career font-medium">Fr</span>
+<!-- Dynamic linear gradient 68% fill + 3px soft pulse ring -->
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-[1.5px] border-area-career flex items-center justify-center text-fg-primary text-label-sm font-semibold pulse-ring relative overflow-hidden transition-transform group-hover:scale-105" style="background: linear-gradient(90deg, #5078f2 68%, transparent 68%);" title="Friday, Oct 16 (Today) · 68% Elapsed">
+<span class="relative z-10 text-on-primary drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">16</span>
+</div>
+<span class="text-[11px] font-caption text-area-career font-medium">today</span>
+</div>
+<!-- Day 6: Sa (17) - Upcoming / Space Remaining -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">Sa</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-area-career/40 flex items-center justify-center text-fg-muted text-label-sm font-normal hover:border-area-career transition-colors" title="Saturday, Oct 17 · Space Remaining">
+            17
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">open</span>
+</div>
+<!-- Day 7: Su (18) - Upcoming / Space Remaining -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="text-caption font-caption text-fg-muted group-hover:text-fg-primary transition-colors">Su</span>
+<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-transparent border-[1.5px] border-area-career/40 flex items-center justify-center text-fg-muted text-label-sm font-normal hover:border-area-career transition-colors" title="Sunday, Oct 18 · Space Remaining">
+            18
+          </div>
+<span class="text-[11px] font-caption text-fg-muted">open</span>
+</div>
+</div>
+<!-- Grid Legend -->
+<div class="mt-4 pt-3 border-t border-border-line flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-caption font-caption text-fg-muted">
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-area-career"></span>
+<span>Passed (4 days)</span>
+</span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full border border-area-career bg-gradient-to-r from-area-career from-50% to-transparent to-50%"></span>
+<span>Today (Oct 16)</span>
+</span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full border border-area-career/50 bg-transparent"></span>
+<span>Space remaining (2 days remaining)</span>
+</span>
+</div>
+</section>
+<!-- 3. Weekly Dimensions (Category Water Indicators) -->
+<section class="space-y-3">
+<!-- Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+<div>
+<h2 class="text-title-section font-title-section text-fg-primary">Weekly Dimensions</h2>
+<p class="text-caption font-caption text-fg-muted">
+            Liquid capacity &amp; fulfillment pacing · Rule of Three (Cap 3 goals)
+          </p>
+</div>
+<div class="text-caption font-caption text-fg-muted hover:text-fg-primary cursor-pointer transition-colors flex items-center gap-1">
+<span>Tap any reservoir to inspect</span>
+<span class="text-[13px]">⧉</span>
+</div>
+</div>
+<!-- 3 Liquid Reservoir Bento Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- CARD 1: Career (Blue hue) -->
+<div class="bg-surface-panel border border-border-line rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary transition-all duration-150">
+<!-- Subtle liquid fill background (66% height) -->
+<div class="absolute bottom-0 left-0 right-0 h-[66%] bg-area-career/5 pointer-events-none border-t border-area-career/20 transition-all duration-500">
+<div class="liquid-wave text-area-career"></div>
+</div>
+<div class="relative z-10">
+<!-- Header row with Category and Badge -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-area-career"></span>
+<span class="text-label-sm font-label-sm font-medium text-fg-primary">Career</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-caption font-caption font-medium bg-area-career/10 text-area-career border border-area-career/20 tabular-nums">
+                66%
+              </span>
+</div>
+<!-- Anchor Goal Tag -->
+<div class="text-[11px] font-caption text-area-career font-medium tracking-wide uppercase mb-1 flex items-center gap-1">
+<span>★</span>
+<span>THE ONE · ANCHOR GOAL</span>
+</div>
+<!-- Item Title -->
+<h3 class="text-body-md font-body-md text-fg-primary font-medium leading-snug line-clamp-2">
+              Complete SOC 2 Stage 4 security audit &amp; documentation
+            </h3>
+<!-- Link Note -->
+<p class="text-caption font-caption text-fg-muted mt-2">
+              Linked to Month: <span class="text-fg-primary">Deliver Q4 Product Launch</span>
+</p>
+</div>
+<!-- Card Bottom & Progress bar -->
+<div class="relative z-10 mt-5 pt-3 border-t border-border-line">
+<!-- Pacing Mini Bar -->
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="h-full bg-area-career rounded-full" style="width: 66%;"></div>
+</div>
+<div class="flex items-center justify-between text-caption font-caption">
+<span class="text-fg-muted">2 of 3 completed</span>
+<a class="text-area-career hover:underline font-medium flex items-center gap-0.5" href="#">
+                Inspect <span>→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- CARD 2: Life & Vitality (Green hue) -->
+<div class="bg-surface-panel border border-border-line rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary transition-all duration-150">
+<!-- Subtle liquid fill background (66% height) -->
+<div class="absolute bottom-0 left-0 right-0 h-[66%] bg-area-life/5 pointer-events-none border-t border-area-life/20 transition-all duration-500">
+<div class="liquid-wave text-area-life"></div>
+</div>
+<div class="relative z-10">
+<!-- Header row with Category and Badge -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-area-life"></span>
+<span class="text-label-sm font-label-sm font-medium text-fg-primary">Life &amp; Vitality</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-caption font-caption font-medium bg-area-life/10 text-area-life border border-area-life/20 tabular-nums">
+                66%
+              </span>
+</div>
+<!-- Anchor Goal Tag -->
+<div class="text-[11px] font-caption text-area-life font-medium tracking-wide uppercase mb-1 flex items-center gap-1">
+<span>●</span>
+<span>PRIMARY ANCHOR</span>
+</div>
+<!-- Item Title -->
+<h3 class="text-body-md font-body-md text-fg-primary font-medium leading-snug line-clamp-2">
+              30 km long run &amp; 3 mobility recovery sessions
+            </h3>
+<!-- Link Note -->
+<p class="text-caption font-caption text-fg-muted mt-2">
+              22 km logged · Linked to Month: <span class="text-fg-primary">100 km &amp; Strength</span>
+</p>
+</div>
+<!-- Card Bottom & Progress bar -->
+<div class="relative z-10 mt-5 pt-3 border-t border-border-line">
+<!-- Pacing Mini Bar -->
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="h-full bg-area-life rounded-full" style="width: 66%;"></div>
+</div>
+<div class="flex items-center justify-between text-caption font-caption">
+<span class="text-fg-muted">2 of 3 completed</span>
+<a class="text-area-life hover:underline font-medium flex items-center gap-0.5" href="#">
+                Inspect <span>→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- CARD 3: Money (Amber hue) -->
+<div class="bg-surface-panel border border-border-line rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary transition-all duration-150">
+<!-- Subtle liquid fill background (100% height = full capacity) -->
+<div class="absolute inset-0 bg-area-money/5 pointer-events-none border-b-2 border-area-money/30 transition-all duration-500">
+<div class="liquid-wave text-area-money"></div>
+</div>
+<div class="relative z-10">
+<!-- Header row with Category and Badge -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-area-money"></span>
+<span class="text-label-sm font-label-sm font-medium text-fg-primary">Money</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-caption font-caption font-medium bg-area-money/10 text-area-money border border-area-money/30 tabular-nums">
+                100%
+              </span>
+</div>
+<!-- Anchor Goal Tag -->
+<div class="text-[11px] font-caption text-area-money font-medium tracking-wide uppercase mb-1 flex items-center gap-1">
+<span>●</span>
+<span>PRIMARY ANCHOR</span>
+</div>
+<!-- Item Title -->
+<h3 class="text-body-md font-body-md text-fg-primary font-medium leading-snug line-clamp-2">
+              Finalize quarterly angel distribution &amp; tax reserve transfer
+            </h3>
+<!-- Link Note -->
+<p class="text-caption font-caption text-fg-muted mt-2">
+              Linked to Month: <span class="text-fg-primary">Wealth Buffer Allocation</span>
+</p>
+</div>
+<!-- Card Bottom & Progress bar -->
+<div class="relative z-10 mt-5 pt-3 border-t border-border-line">
+<!-- Pacing Mini Bar -->
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="h-full bg-area-money rounded-full" style="width: 100%;"></div>
+</div>
+<div class="flex items-center justify-between text-caption font-caption">
+<span class="text-area-money font-medium">3 of 3 completed</span>
+<a class="text-area-money hover:underline font-medium flex items-center gap-0.5" href="#">
+                Inspect <span>→</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Custom Dimension Button -->
+<button class="w-full py-2.5 px-4 rounded-xl border border-dashed border-border-line hover:border-fg-primary bg-surface/50 hover:bg-surface-panel text-caption font-caption text-fg-muted hover:text-fg-primary transition-colors text-center" type="button">
+        + Add Custom Dimension (e.g., Creative Arts, Philosophy, Sanctuary) · Cap 4 max
+      </button>
+</section>
+<!-- 4. Weekly Philosophy & Liquid Guidance Card -->
+<section class="bg-surface-panel border border-border-line rounded-xl p-5">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-area-career shrink-0 mt-0.5">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-title-section font-title-section text-fg-primary">
+            Liquid Pacing &amp; Weekly Cadence
+          </h3>
+<p class="text-body-md font-body-md text-fg-muted leading-relaxed">
+            Weekly water reservoirs translate overarching monthly vision into manageable bursts of deliberate attention. Once your reservoir touches capacity, protect Saturday and Sunday for rejuvenation without anxious overplanning.
+          </p>
+<!-- Domain balance chips -->
+<div class="pt-2 flex flex-wrap gap-2 text-caption font-caption">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-fg-primary border border-border-line">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career"></span>
+<span>Career on track: <strong class="font-medium">66%</strong></span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-fg-primary border border-border-line">
+<span class="w-1.5 h-1.5 rounded-full bg-area-life"></span>
+<span>Vitality flowing: <strong class="font-medium">66%</strong></span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-fg-primary border border-border-line">
+<span class="w-1.5 h-1.5 rounded-full bg-area-money"></span>
+<span>Wealth complete: <strong class="font-medium">100%</strong></span>
+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Footer -->
+<footer class="pt-4 border-t border-border-line flex flex-col sm:flex-row items-center justify-between text-caption font-caption text-fg-muted gap-2">
+<div class="flex items-center gap-2">
+<span>Dots of Time</span>
+<span>·</span>
+<span>Intentional pacing &amp; calm presence</span>
+</div>
+<div class="flex items-center gap-3">
+<a class="hover:text-fg-primary transition-colors" href="#">Philosophy</a>
+<span>·</span>
+<a class="hover:text-fg-primary transition-colors" href="#">Keyboard shortcuts <kbd class="px-1 py-0.5 text-[10px] bg-surface-container rounded border border-border-line font-mono">?</kbd></a>
+<span>·</span>
+<span>v1.2</span>
+</div>
+</footer>
+</main>
+<!-- Interactive State / Keyboard Shortcut Listener (Micro-interaction) -->
+<script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '?') {
+        alert("Dots of Time — Keyboard shortcuts:\n\nD: Switch to Day View\nW: Switch to Week View\nM: Switch to Month View\nY: Switch to Year View\nSpace: Mark active day reflection");
+      }
+    });
+  </script>
+</body></html>

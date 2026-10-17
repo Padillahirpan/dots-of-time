@@ -1,0 +1,494 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dots of Time — Year View</title>
+<!-- Google Fonts: DM Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "border-line": "#dcdad4",
+            "surface-container-low": "#f4f2fc",
+            "error": "#ba1a1a",
+            "surface": "#fbf8ff",
+            "on-background": "#1a1b22",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#b5c4ff",
+            "tertiary-fixed": "#ffdeaa",
+            "area-career": "#5078f2",
+            "fg-primary": "#1b1b1f",
+            "on-primary-fixed-variant": "#003bae",
+            "secondary-fixed": "#89f9b0",
+            "tertiary": "#7a5500",
+            "on-error-container": "#93000a",
+            "surface-panel": "#ffffff",
+            "outline-variant": "#c4c5d6",
+            "area-life": "#2fa464",
+            "surface-container-highest": "#e3e1eb",
+            "surface-container": "#eeedf6",
+            "inverse-on-surface": "#f1f0f9",
+            "on-secondary-fixed-variant": "#00522c",
+            "secondary": "#006d3c",
+            "on-tertiary": "#ffffff",
+            "bg-canvas": "#f6f5f2",
+            "tertiary-fixed-dim": "#fabc48",
+            "background": "#fbf8ff",
+            "error-container": "#ffdad6",
+            "on-primary-fixed": "#00164e",
+            "secondary-fixed-dim": "#6ddc96",
+            "inverse-surface": "#2f3037",
+            "surface-container-high": "#e9e7f0",
+            "fg-muted": "#6c6c74",
+            "on-primary": "#ffffff",
+            "primary": "#2352cb",
+            "on-primary-container": "#fffbff",
+            "surface-dim": "#dad9e2",
+            "on-surface": "#1a1b22",
+            "surface-bright": "#fbf8ff",
+            "outline": "#747685",
+            "on-secondary-fixed": "#00210e",
+            "surface-variant": "#e3e1eb",
+            "tertiary-container": "#9a6c00",
+            "secondary-container": "#89f9b0",
+            "on-tertiary-fixed": "#271900",
+            "on-secondary-container": "#007440",
+            "on-tertiary-container": "#fffbff",
+            "on-surface-variant": "#434654",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b5c4ff",
+            "area-money": "#d49b28",
+            "primary-container": "#436ce5",
+            "on-tertiary-fixed-variant": "#5f4100",
+            "primary-fixed": "#dce1ff",
+            "surface-tint": "#2654ce"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-xl": "1.25rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.125rem",
+            "space-md": "0.875rem",
+            "gutter": "0.5rem"
+          },
+          "fontFamily": {
+            "caption": ["DM Sans"],
+            "title-section": ["DM Sans"],
+            "display-percent": ["DM Sans"],
+            "input-base": ["DM Sans"],
+            "label-sm": ["DM Sans"],
+            "body-md": ["DM Sans"],
+            "headline-sm": ["DM Sans"]
+          },
+          "fontSize": {
+            "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "title-section": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "display-percent": ["34px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "input-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["14.5px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+    }
+    
+    /* Subtle wave keyframe animation for organic liquid appearance */
+    @keyframes waveMotion {
+      0% { transform: translateX(0) translateZ(0) scaleY(1); }
+      50% { transform: translateX(-25%) translateZ(0) scaleY(1.08); }
+      100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+    }
+    
+    .wave-anim {
+      animation: waveMotion 9s ease-in-out infinite;
+    }
+    .wave-anim-delayed {
+      animation: waveMotion 13s ease-in-out infinite reverse;
+    }
+
+    /* Ambient pulse for current day ring */
+    @keyframes dotPulse {
+      0%, 100% {
+        box-shadow: 0 0 0 2px #5078f2, 0 0 0 4px rgba(80, 120, 242, 0.25);
+      }
+      50% {
+        box-shadow: 0 0 0 2px #5078f2, 0 0 0 7px rgba(80, 120, 242, 0.1);
+      }
+    }
+    .current-dot-active {
+      animation: dotPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-fg-primary min-h-full font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar docked anchor matching Shared Component specs -->
+<header class="w-full bg-bg-canvas border-b border-border-line sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-margin py-space-sm max-w-[720px] mx-auto">
+<!-- Brand & Metadata Anchor -->
+<div class="flex items-baseline space-x-3">
+<span class="text-title-section font-title-section text-fg-primary tracking-tight font-medium">Dots of Time</span>
+<span class="text-caption font-caption text-fg-muted hidden sm:inline">2026 · 365 days · Non-leap year</span>
+</div>
+<!-- Scale Navigation Tabs (Day, Week, Month, Year) -->
+<nav class="flex items-center space-x-5 text-label-sm font-label-sm">
+<a class="text-fg-muted hover:text-fg-primary pb-1 transition-colors duration-150" href="#day">Day</a>
+<a class="text-fg-muted hover:text-fg-primary pb-1 transition-colors duration-150" href="#week">Week</a>
+<a class="text-fg-muted hover:text-fg-primary pb-1 transition-colors duration-150" href="#month">Month</a>
+<!-- Year active state mandated by JSON token rules -->
+<a class="text-fg-primary border-b-2 border-primary font-medium pb-1 transition-colors duration-150" href="#year">Year</a>
+</nav>
+<!-- Trailing Action Icons -->
+<div class="flex items-center space-x-1">
+<button aria-label="Palette preferences" class="p-2 rounded hover:text-primary active:opacity-75 transition-colors text-fg-primary" type="button">
+<span class="material-symbols-outlined text-[19px]">palette</span>
+</button>
+<button aria-label="Settings" class="p-2 rounded hover:text-primary active:opacity-75 transition-colors text-fg-primary" type="button">
+<span class="material-symbols-outlined text-[19px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas Centered Content constrained to 720px max-width -->
+<main class="max-w-[720px] mx-auto px-margin pt-5 pb-12 space-y-8">
+<!-- Section 1: Annual Time Header & 365 Geometry Dot Panel -->
+<section class="space-y-4">
+<!-- Title & Percentage Readout -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-1">
+<div>
+<div class="flex items-center space-x-2">
+<h1 class="text-headline-sm font-headline-sm text-fg-primary tracking-tight">2026</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-caption font-caption bg-surface-panel border border-border-line text-fg-muted">Q4 · Autumn</span>
+</div>
+<p class="text-body-md font-body-md text-fg-muted mt-0.5">Day 289 of 365 · Friday, October 16</p>
+</div>
+<div class="sm:text-right">
+<div class="text-display-percent font-display-percent text-fg-primary tabular-nums">79.2%</div>
+<p class="text-caption font-caption text-fg-muted">annual duration elapsed</p>
+</div>
+</div>
+<!-- Matrix Dot Panel -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-5 space-y-5">
+<div class="flex items-center justify-between border-b border-border-line pb-3">
+<div class="flex items-center space-x-2">
+<span class="text-title-section font-title-section text-fg-primary">365-Day Cadence</span>
+<span class="text-caption font-caption text-fg-muted">24 rows × 15–16 cols</span>
+</div>
+<!-- Quick Status Tooltip Pill -->
+<div class="flex items-center space-x-1.5 bg-bg-canvas px-2.5 py-1 rounded-full border border-border-line text-caption font-caption text-fg-primary">
+<span class="w-2 h-2 rounded-full bg-area-career"></span>
+<span>Current: Day 289 (Oct 16)</span>
+</div>
+</div>
+<!-- 365 Hero Dots Visualization Matrix -->
+<!-- Generated with deliberate responsive grid: minmax 13px, gap 5px -->
+<div class="relative">
+<div class="grid grid-cols-[repeat(auto-fill,minmax(13px,1fr))] gap-[5px] select-none py-1" id="year-matrix-grid">
+<!-- JavaScript dynamically populates 365 pure geometric nodes adhering to elapsed, today, and future styles -->
+</div>
+<!-- Ephemeral Interactive Hover Floating Indicator (Low contrast, quiet) -->
+<div class="hidden absolute pointer-events-none -translate-x-1/2 -top-9 bg-inverse-surface text-inverse-on-surface px-2.5 py-1 rounded text-caption font-caption z-20 whitespace-nowrap" id="dot-tooltip">
+            Day 289 · Fri, Oct 16 (Today)
+          </div>
+</div>
+<!-- Metric Legend: Flat, quiet, hairline divider -->
+<div class="pt-3 border-t border-border-line flex flex-wrap items-center justify-between gap-3 text-caption font-caption text-fg-muted">
+<div class="flex items-center space-x-5">
+<!-- Passed -->
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-area-career"></span>
+<span>Passed <strong class="font-medium text-fg-primary">288 days</strong></span>
+</div>
+<!-- Today -->
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-area-career ring-2 ring-primary-fixed ring-offset-1"></span>
+<span>Today <strong class="font-medium text-fg-primary">Oct 16</strong></span>
+</div>
+<!-- Remaining -->
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full border border-area-career/50 bg-transparent"></span>
+<span>Remaining <strong class="font-medium text-fg-primary">76 days</strong></span>
+</div>
+</div>
+<span class="tabular-nums">52 Weeks Completed</span>
+</div>
+</div>
+</section>
+<!-- Section 2: Category Water Indicator Cards (Fluid Reservoir System) -->
+<section class="space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-1">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-fg-primary">Annual Dimensions</h2>
+<p class="text-caption font-caption text-fg-muted mt-0.5">Liquid capacity &amp; fulfillment pacing · Rule of Three (Cap 3 goals)</p>
+</div>
+<span class="text-caption font-caption text-fg-muted">Tap any reservoir to inspect</span>
+</div>
+<!-- 3-Column Reservoir Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Card 1: Career (Area Blue 66%) -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary/40 transition-colors duration-150 cursor-pointer">
+<!-- Fluid Water Level Reservoir (66% height) -->
+<div class="absolute inset-x-0 bottom-0 pointer-events-none overflow-hidden h-[66%] bg-area-career/[0.08] border-t border-area-career/25 transition-all duration-300">
+<!-- Liquid wave crest SVG effect -->
+<div class="absolute -top-[14px] left-0 w-[200%] h-[20px] opacity-25 wave-anim">
+<svg class="w-full h-full fill-area-career" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,10 C150,25 350,-5 500,10 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+<div class="absolute -top-[12px] left-0 w-[200%] h-[20px] opacity-15 wave-anim-delayed">
+<svg class="w-full h-full fill-area-career" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,8 C120,-3 320,23 500,8 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+</div>
+<!-- Card Content (Layered quietly above water canvas) -->
+<div class="relative z-10 flex flex-col h-full justify-between space-y-6">
+<!-- Header row -->
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-area-career"></span>
+<span class="text-title-section font-title-section text-fg-primary">Career</span>
+</div>
+<span class="text-caption font-caption text-fg-muted font-medium bg-surface-panel/90 px-1.5 py-0.5 rounded border border-border-line/80 tabular-nums">66%</span>
+</div>
+<!-- Focus Achievement / Highlights -->
+<div class="space-y-1.5 my-auto">
+<div class="text-caption font-caption text-fg-muted">Primary Anchor</div>
+<p class="text-body-md font-body-md text-fg-primary font-medium leading-snug">The One: $120k ARR Achieved</p>
+<p class="text-caption font-caption text-fg-muted">Secondary: Studio Brand Revamp</p>
+</div>
+<!-- Bottom status footer -->
+<div class="pt-3 border-t border-border-line/70 flex items-center justify-between text-caption font-caption">
+<span class="text-fg-muted">2 of 3 completed</span>
+<span class="text-area-career font-medium flex items-center space-x-0.5 group-hover:translate-x-0.5 transition-transform duration-150">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Life & Vitality (Area Life Green 33%) -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary/40 transition-colors duration-150 cursor-pointer">
+<!-- Fluid Water Level Reservoir (33% height) -->
+<div class="absolute inset-x-0 bottom-0 pointer-events-none overflow-hidden h-[33%] bg-area-life/[0.08] border-t border-area-life/25 transition-all duration-300">
+<!-- Liquid wave crest SVG effect -->
+<div class="absolute -top-[14px] left-0 w-[200%] h-[20px] opacity-25 wave-anim">
+<svg class="w-full h-full fill-area-life" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,10 C150,25 350,-5 500,10 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+<div class="absolute -top-[12px] left-0 w-[200%] h-[20px] opacity-15 wave-anim-delayed">
+<svg class="w-full h-full fill-area-life" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,8 C120,-3 320,23 500,8 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+</div>
+<!-- Card Content -->
+<div class="relative z-10 flex flex-col h-full justify-between space-y-6">
+<!-- Header row -->
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-area-life"></span>
+<span class="text-title-section font-title-section text-fg-primary">Life &amp; Vitality</span>
+</div>
+<span class="text-caption font-caption text-fg-muted font-medium bg-surface-panel/90 px-1.5 py-0.5 rounded border border-border-line/80 tabular-nums">33%</span>
+</div>
+<!-- Focus Achievement / Highlights -->
+<div class="space-y-1.5 my-auto">
+<div class="text-caption font-caption text-fg-muted">Primary Anchor</div>
+<p class="text-body-md font-body-md text-fg-primary font-medium leading-snug">Marathon Base (840/1200km)</p>
+<p class="text-caption font-caption text-fg-muted">Daily: 15m Morning stillness</p>
+</div>
+<!-- Bottom status footer -->
+<div class="pt-3 border-t border-border-line/70 flex items-center justify-between text-caption font-caption">
+<span class="text-fg-muted">1 of 3 completed</span>
+<span class="text-area-life font-medium flex items-center space-x-0.5 group-hover:translate-x-0.5 transition-transform duration-150">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Money & Wealth (Area Money Amber 66%) -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-4 flex flex-col justify-between relative overflow-hidden group hover:border-fg-primary/40 transition-colors duration-150 cursor-pointer">
+<!-- Fluid Water Level Reservoir (66% height) -->
+<div class="absolute inset-x-0 bottom-0 pointer-events-none overflow-hidden h-[66%] bg-area-money/[0.08] border-t border-area-money/25 transition-all duration-300">
+<!-- Liquid wave crest SVG effect -->
+<div class="absolute -top-[14px] left-0 w-[200%] h-[20px] opacity-25 wave-anim">
+<svg class="w-full h-full fill-area-money" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,10 C150,25 350,-5 500,10 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+<div class="absolute -top-[12px] left-0 w-[200%] h-[20px] opacity-15 wave-anim-delayed">
+<svg class="w-full h-full fill-area-money" preserveAspectRatio="none" viewBox="0 0 500 20">
+<path d="M0,8 C120,-3 320,23 500,8 L500,20 L0,20 Z"></path>
+</svg>
+</div>
+</div>
+<!-- Card Content -->
+<div class="relative z-10 flex flex-col h-full justify-between space-y-6">
+<!-- Header row -->
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-area-money"></span>
+<span class="text-title-section font-title-section text-fg-primary">Money</span>
+</div>
+<span class="text-caption font-caption text-fg-muted font-medium bg-surface-panel/90 px-1.5 py-0.5 rounded border border-border-line/80 tabular-nums">66%</span>
+</div>
+<!-- Focus Achievement / Highlights -->
+<div class="space-y-1.5 my-auto">
+<div class="text-caption font-caption text-fg-muted">Primary Anchor</div>
+<p class="text-body-md font-body-md text-fg-primary font-medium leading-snug">Retirement Maxed · Vault 80%</p>
+<p class="text-caption font-caption text-fg-muted">Reserve: 6-Month Liquidity</p>
+</div>
+<!-- Bottom status footer -->
+<div class="pt-3 border-t border-border-line/70 flex items-center justify-between text-caption font-caption">
+<span class="text-fg-muted">2 of 3 completed</span>
+<span class="text-area-money font-medium flex items-center space-x-0.5 group-hover:translate-x-0.5 transition-transform duration-150">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action: Add Custom Category dashed row -->
+<div class="border border-dashed border-border-line hover:border-fg-primary/50 transition-colors duration-150 rounded-xl p-3 flex items-center justify-between cursor-pointer bg-surface-panel/40">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-fg-muted text-[18px]">add</span>
+<span class="text-label-sm font-label-sm text-fg-primary">Add Custom Dimension</span>
+<span class="text-caption font-caption text-fg-muted hidden sm:inline">(e.g., Creative Arts, Philosophy, Sanctuary)</span>
+</div>
+<span class="text-caption font-caption text-fg-muted">Cap 4 max</span>
+</div>
+</section>
+<!-- Section 3: Unobtrusive Guidance Card (Liquid Pacing & Capacity) -->
+<section class="bg-surface-panel rounded-xl border border-border-line p-5 space-y-3">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-fg-primary text-[20px]">water_drop</span>
+<h3 class="text-title-section font-title-section text-fg-primary">Liquid Pacing &amp; Capacity</h3>
+</div>
+<p class="text-body-md font-body-md text-fg-muted leading-relaxed">
+        Water reservoirs represent finite energetic capacity rather than hurried checklists. When a reservoir fills, that life domain has achieved annual equilibrium; no further obligations need be forced into it. Outlined matrix dots ahead mark open space, quiet rest, and seasonal possibility.
+      </p>
+<div class="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-caption font-caption text-fg-muted">
+<div class="flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career"></span>
+<span>Career balanced: 66%</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-area-life"></span>
+<span>Vitality steady: 33%</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-area-money"></span>
+<span>Wealth fortified: 66%</span>
+</div>
+</div>
+</section>
+<!-- Footer: Calm, minimal, clean 1px hairline separation -->
+<footer class="pt-6 border-t border-border-line flex flex-col sm:flex-row items-center justify-between text-caption font-caption text-fg-muted gap-3">
+<div class="flex items-center space-x-2">
+<span class="text-fg-primary font-medium">Dots of Time</span>
+<span>·</span>
+<span>Intentional pacing &amp; calm presence</span>
+</div>
+<div class="flex items-center space-x-4">
+<a class="hover:text-fg-primary transition-colors" href="#philosophy">Philosophy</a>
+<a class="hover:text-fg-primary transition-colors" href="#shortcuts">Keyboard shortcuts <kbd class="px-1 py-0.5 bg-bg-canvas border border-border-line rounded text-[10px]">?</kbd></a>
+<span class="text-border-line">|</span>
+<span class="tabular-nums">v1.2</span>
+</div>
+</footer>
+</main>
+<!-- Interactive Matrix Generator Script (Vanilla JS for micro-interactions) -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("year-matrix-grid");
+      const tooltip = document.getElementById("dot-tooltip");
+      const totalDays = 365;
+      const currentDay = 289; // Friday, Oct 16
+
+      // Approximate month breakpoints for non-leap year
+      const months = [
+        { name: "Jan", days: 31 }, { name: "Feb", days: 28 }, { name: "Mar", days: 31 },
+        { name: "Apr", days: 30 }, { name: "May", days: 31 }, { name: "Jun", days: 30 },
+        { name: "Jul", days: 31 }, { name: "Aug", days: 31 }, { name: "Sep", days: 30 },
+        { name: "Oct", days: 31 }, { name: "Nov", days: 30 }, { name: "Dec", days: 31 }
+      ];
+
+      function getMonthDay(dayOfYear) {
+        let count = 0;
+        for (let m of months) {
+          if (dayOfYear <= count + m.days) {
+            return `${m.name} ${dayOfYear - count}`;
+          }
+          count += m.days;
+        }
+        return `Dec 31`;
+      }
+
+      // Populate 365 Dots
+      for (let i = 1; i <= totalDays; i++) {
+        const dot = document.createElement("div");
+        dot.setAttribute("data-day", i);
+        dot.className = "w-full aspect-square rounded-full transition-transform duration-100 hover:scale-125 cursor-pointer relative";
+
+        if (i < currentDay) {
+          // Passed Days (Filled hero dots)
+          dot.className += " bg-area-career";
+          dot.setAttribute("title", `Day ${i} · Passed`);
+        } else if (i === currentDay) {
+          // Current Day (Active dot with subtle pulse ring)
+          dot.className += " bg-area-career current-dot-active z-10";
+          dot.setAttribute("title", `Day ${i} (Today) · Oct 16`);
+        } else {
+          // Future Days (Outlined perimeter, open space)
+          dot.className += " bg-transparent border border-area-career/40 hover:border-area-career";
+          dot.setAttribute("title", `Day ${i} · Future`);
+        }
+
+        // Hover tooltip micro-interaction
+        dot.addEventListener("mouseenter", (e) => {
+          const rect = dot.getBoundingClientRect();
+          const gridRect = grid.getBoundingClientRect();
+          const dayDate = getMonthDay(i);
+          const stateLabel = i < currentDay ? "Passed" : (i === currentDay ? "Today" : "Open");
+
+          tooltip.textContent = `Day ${i} · ${dayDate} (${stateLabel})`;
+          tooltip.style.left = `${rect.left - gridRect.left + rect.width / 2}px`;
+          tooltip.style.top = `${rect.top - gridRect.top - 28}px`;
+          tooltip.classList.remove("hidden");
+        });
+
+        dot.addEventListener("mouseleave", () => {
+          tooltip.classList.add("hidden");
+        });
+
+        grid.appendChild(dot);
+      }
+    });
+  </script>
+</body></html>

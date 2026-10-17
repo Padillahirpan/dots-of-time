@@ -1,0 +1,419 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dots of Time — Day View &amp; Category Goals Inspection Dialog</title>
+<!-- Google Fonts: DM Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration verbatim from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#271900",
+            "secondary": "#006d3c",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "primary-fixed": "#dce1ff",
+            "secondary-container": "#89f9b0",
+            "area-career": "#5078f2",
+            "on-surface-variant": "#434654",
+            "background": "#fbf8ff",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#89f9b0",
+            "tertiary-container": "#9a6c00",
+            "primary-fixed-dim": "#b5c4ff",
+            "surface-tint": "#2654ce",
+            "inverse-on-surface": "#f1f0f9",
+            "on-secondary-fixed": "#00210e",
+            "on-primary": "#ffffff",
+            "primary": "#2352cb",
+            "surface-container-low": "#f4f2fc",
+            "on-tertiary-container": "#fffbff",
+            "area-money": "#d49b28",
+            "secondary-fixed-dim": "#6ddc96",
+            "on-background": "#1a1b22",
+            "surface-variant": "#e3e1eb",
+            "on-tertiary": "#ffffff",
+            "surface-bright": "#fbf8ff",
+            "on-surface": "#1a1b22",
+            "border-line": "#dcdad4",
+            "bg-canvas": "#f6f5f2",
+            "surface-dim": "#dad9e2",
+            "tertiary": "#7a5500",
+            "on-primary-container": "#fffbff",
+            "area-life": "#2fa464",
+            "tertiary-fixed": "#ffdeaa",
+            "surface-container-high": "#e9e7f0",
+            "surface": "#fbf8ff",
+            "outline": "#747685",
+            "inverse-surface": "#2f3037",
+            "tertiary-fixed-dim": "#fabc48",
+            "on-primary-fixed-variant": "#003bae",
+            "inverse-primary": "#b5c4ff",
+            "on-primary-fixed": "#00164e",
+            "on-secondary-container": "#007440",
+            "on-secondary": "#ffffff",
+            "outline-variant": "#c4c5d6",
+            "surface-panel": "#ffffff",
+            "fg-primary": "#1b1b1f",
+            "fg-muted": "#6c6c74",
+            "on-tertiary-fixed-variant": "#5f4100",
+            "on-secondary-fixed-variant": "#00522c",
+            "surface-container": "#eeedf6",
+            "primary-container": "#436ce5",
+            "surface-container-highest": "#e3e1eb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.125rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "gutter": "0.5rem",
+            "space-md": "0.875rem",
+            "margin": "1rem",
+            "space-xl": "1.25rem"
+          },
+          "fontFamily": {
+            "input-base": ["DM Sans"],
+            "caption": ["DM Sans"],
+            "body-md": ["DM Sans"],
+            "display-percent": ["DM Sans"],
+            "title-section": ["DM Sans"],
+            "headline-sm": ["DM Sans"],
+            "label-sm": ["DM Sans"]
+          },
+          "fontSize": {
+            "input-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-md": ["14.5px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "display-percent": ["34px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "title-section": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "label-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Material Symbols base styling */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-fg-primary font-body-md text-body-md antialiased min-h-screen relative overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- ========================================================================= -->
+<!-- BACKGROUND SCREEN CONTEXT (Day View: Calm, Dimmed, Locked Underneath)    -->
+<!-- ========================================================================= -->
+<div class="relative w-full min-h-screen filter blur-[1px] opacity-75 pointer-events-none select-none transition-all duration-300">
+<!-- TopNavBar Shared Component Execution -->
+<header class="w-full bg-surface dark:bg-inverse-surface border-b border-border-line dark:border-outline-variant sticky top-0 z-10">
+<div class="flex justify-between items-center w-full px-margin max-w-[720px] mx-auto h-14">
+<!-- Brand & Context -->
+<div class="flex items-center gap-3">
+<span class="text-headline-sm font-headline-sm font-medium text-fg-primary dark:text-inverse-on-surface tracking-tight">
+            Dots of Time
+          </span>
+<span class="text-outline-variant text-caption font-caption">/</span>
+<span class="text-caption font-caption text-fg-muted font-normal">
+            Friday, October 16, 2026
+          </span>
+</div>
+<!-- Navigation Links with Active State Logic (Day Active) -->
+<nav class="flex items-center space-x-6 text-label-sm font-label-sm">
+<a class="text-area-career dark:text-primary-fixed border-b-2 border-area-career dark:border-primary-fixed pb-1 font-medium" href="#">Day</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Week</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Month</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Year</a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2">
+<button class="w-9 h-9 rounded-lg flex items-center justify-center text-fg-muted hover:text-fg-primary hover:bg-surface-variant transition-colors" data-icon="calendar_today">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</button>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center text-fg-muted hover:text-fg-primary hover:bg-surface-variant transition-colors" data-icon="settings">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-border-line overflow-hidden ml-1">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist portrait avatar photo of a thoughtful design professional in gentle studio light, wearing quiet earthy attire against an off-white paper neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuRlqm4Mv97Etn1aVPIPacV_nWjjE1LI7--C-DgWmHGAOBQObCbhXqQxtwtmIPzMObagxlAddSZOBrHwI624J_uuFAo8E2KDqVkcbS-MgjWVsVepn8G5Ct53sIEW5iMJDpeA00kUa-28RljAe9FgSR-i0vTBH7zgI4A4vsf2HpSx0lB91e-LfeyRobJPcAT9iMIOww2cFsVkjevhVLKZIf7XFaVXor0v65TP0S6mf_9tP-rkBbQByQVg">
+</div>
+</div>
+</div>
+</header>
+<!-- Main Day View Surface Container -->
+<main class="max-w-[720px] mx-auto px-margin pt-5 pb-12 flex flex-col gap-6">
+<!-- Day Cadence Hero Summary -->
+<section class="bg-surface-panel rounded-xl border border-border-line p-5">
+<div class="flex items-baseline justify-between mb-4">
+<div>
+<h2 class="text-title-section font-title-section text-fg-primary">24-hour cadence grid</h2>
+<p class="text-caption font-caption text-fg-muted">Linear day progress representation</p>
+</div>
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm text-area-career font-medium">60.4%</span>
+<span class="text-caption font-caption text-fg-muted ml-1.5">elapsed · 14:30</span>
+</div>
+</div>
+<!-- 24-dot Day Grid (12 cols x 2 rows, gap 8px) -->
+<div class="grid grid-cols-12 gap-2 pt-1 pb-2">
+<!-- 14 filled dots (hours 00:00 to 14:00) -->
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<!-- Second row -->
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<div class="w-full aspect-square rounded-full bg-area-career border-[1.5px] border-area-career"></div>
+<!-- Hour 14:30 (current hour active progress gradient) -->
+<div class="w-full aspect-square rounded-full border border-area-career ring-2 ring-area-career/20" style="background: linear-gradient(90deg, #5078f2 50%, transparent 50%);"></div>
+<!-- Remaining 9 hours (open rings) -->
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+<div class="w-full aspect-square rounded-full border border-area-career/45"></div>
+</div>
+</section>
+<!-- 3 Daily Dimension Reservoirs -->
+<section class="grid grid-cols-3 gap-4">
+<!-- 1. Career Reservoir (Inspected card) -->
+<div class="bg-surface-panel rounded-xl border-2 border-area-career p-4 relative ring-2 ring-area-career/20">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm font-medium text-area-career">Career</span>
+<span class="text-caption font-caption text-fg-muted">Slot 2/3</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-medium text-fg-primary">66%</div>
+<div class="w-full bg-border-line/40 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-area-career h-full w-[66%]"></div>
+</div>
+</div>
+<!-- 2. Life & Vitality Reservoir -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm font-medium text-area-life">Life &amp; Vitality</span>
+<span class="text-caption font-caption text-fg-muted">Slot 1/3</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-medium text-fg-primary">33%</div>
+<div class="w-full bg-border-line/40 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-area-life h-full w-[33%]"></div>
+</div>
+</div>
+<!-- 3. Money Reservoir -->
+<div class="bg-surface-panel rounded-xl border border-border-line p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm font-medium text-area-money">Money</span>
+<span class="text-caption font-caption text-fg-muted">Slot 3/3</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-medium text-fg-primary">100%</div>
+<div class="w-full bg-border-line/40 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-area-money h-full w-full"></div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- ========================================================================= -->
+<!-- MODAL BACKDROP OVERLAY                                                   -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 bg-[#1b1b1f]/35 backdrop-blur-[2px] z-40 transition-opacity"></div>
+<!-- ========================================================================= -->
+<!-- FOREGROUND MODAL DIALOG                                                  -->
+<!-- Centered, max-w-[580px], calm surface-panel, border-line elevation        -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+<div class="relative w-full max-w-[580px] bg-surface-panel rounded-xl border border-border-line shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<!-- Liquid Mini Progress Bar at Top Border -->
+<div class="w-full h-1 bg-border-line/30 relative">
+<div class="h-full bg-area-career transition-all duration-500" style="width: 66.6%;"></div>
+</div>
+<!-- Dialog Header Area -->
+<div class="px-6 pt-5 pb-4 border-b border-border-line/80">
+<div class="flex items-start justify-between">
+<div class="flex items-start gap-3.5">
+<!-- Career Icon Badge -->
+<div class="w-10 h-10 rounded-lg bg-primary-fixed/40 border border-primary-fixed flex items-center justify-center text-area-career shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="work">work</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-headline-sm font-headline-sm text-fg-primary font-medium tracking-tight">Career Daily Goals &amp; Status</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-caption font-caption bg-surface-container text-fg-muted border border-border-line">
+                  Slot 2 of 3
+                </span>
+</div>
+<p class="text-label-sm font-label-sm text-fg-muted mt-0.5">
+                2 of 3 completed · 66% fluid volume fulfilled
+              </p>
+</div>
+</div>
+<!-- Close Action -->
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg border border-transparent hover:border-border-line hover:bg-bg-canvas text-fg-muted hover:text-fg-primary flex items-center justify-center transition-colors" data-icon="close">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Dialog Body Content -->
+<div class="p-6 space-y-4 max-h-[calc(85vh-160px)] overflow-y-auto">
+<!-- Active Commitments Section Header -->
+<div class="flex items-center justify-between pb-1">
+<span class="text-caption font-caption uppercase tracking-wider text-fg-muted font-medium">Active Commitments (Rule of Three)</span>
+<span class="text-caption font-caption text-area-career font-medium">Capacity 3/3</span>
+</div>
+<!-- Hard-Capped 3 Items Container -->
+<div class="space-y-3">
+<!-- GOAL 1: Done + "The One" Pareto Star Filter -->
+<div class="group bg-bg-canvas/50 hover:bg-bg-canvas rounded-lg border border-border-line p-3.5 transition-all">
+<div class="flex items-start gap-3">
+<!-- Checked Icon Circle -->
+<div class="w-5 h-5 rounded-full bg-area-career text-on-primary flex items-center justify-center shrink-0 mt-0.5 cursor-pointer">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-md font-body-md text-fg-primary font-medium line-through decoration-fg-muted/60">
+                    Finalize SOC 2 audit remediations &amp; submit report
+                  </span>
+<!-- Pareto Star Badge -->
+<span class="inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-caption font-caption bg-tertiary-fixed/40 text-tertiary border border-tertiary-fixed text-[11px] font-medium">
+<span class="material-symbols-outlined fill text-[12px] text-area-money" data-icon="star">star</span>
+                    The One
+                  </span>
+</div>
+<p class="text-caption font-caption text-fg-muted mt-1 flex items-center gap-1.5 flex-wrap">
+<span>Completed at 11:30</span>
+<span class="text-outline-variant">·</span>
+<span class="truncate">Cascaded to Week: <span class="text-fg-primary/80">SOC 2 Stage 4 security audit</span></span>
+</p>
+</div>
+<!-- Row Action -->
+<button class="text-caption font-caption text-fg-muted hover:text-fg-primary px-2.5 py-1 rounded border border-border-line hover:border-fg-primary bg-surface-panel transition-colors shrink-0">
+                Adjust
+              </button>
+</div>
+</div>
+<!-- GOAL 2: Done -->
+<div class="group bg-bg-canvas/50 hover:bg-bg-canvas rounded-lg border border-border-line p-3.5 transition-all">
+<div class="flex items-start gap-3">
+<!-- Checked Icon Circle -->
+<div class="w-5 h-5 rounded-full bg-area-career text-on-primary flex items-center justify-center shrink-0 mt-0.5 cursor-pointer">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md text-fg-primary font-medium line-through decoration-fg-muted/60">
+                    Review and merge PR #412 for user auth tokens
+                  </span>
+</div>
+<p class="text-caption font-caption text-fg-muted mt-1 flex items-center gap-1.5 flex-wrap">
+<span>Completed at 13:45</span>
+<span class="text-outline-variant">·</span>
+<span class="truncate">Cascaded to Month: <span class="text-fg-primary/80">Deliver Q4 Product Launch</span></span>
+</p>
+</div>
+<!-- Row Action -->
+<button class="text-caption font-caption text-fg-muted hover:text-fg-primary px-2.5 py-1 rounded border border-border-line hover:border-fg-primary bg-surface-panel transition-colors shrink-0">
+                Adjust
+              </button>
+</div>
+</div>
+<!-- GOAL 3: In Progress / Active -->
+<div class="group bg-surface-panel rounded-lg border border-border-line ring-1 ring-area-career/30 p-3.5 shadow-sm transition-all">
+<div class="flex items-start gap-3">
+<!-- Unchecked Ring Circle -->
+<div class="w-5 h-5 rounded-full border-2 border-area-career bg-transparent flex items-center justify-center shrink-0 mt-0.5 cursor-pointer hover:bg-area-career/10 transition-colors">
+<div class="w-1.5 h-1.5 rounded-full bg-area-career/40"></div>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2 flex-wrap">
+<span class="text-body-md font-body-md text-fg-primary font-medium">
+                    Draft team onboarding checklist for Q4 sprint
+                  </span>
+<!-- Status Pill -->
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-caption font-caption bg-primary-fixed/40 text-primary border border-primary-fixed-dim text-[11px] font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career animate-pulse"></span>
+                    In progress · 45%
+                  </span>
+</div>
+<!-- Mini Progress Track -->
+<div class="w-full bg-border-line/40 h-1.5 rounded-full my-2 overflow-hidden">
+<div class="bg-area-career h-full rounded-full transition-all duration-300" style="width: 45%;"></div>
+</div>
+<p class="text-caption font-caption text-fg-muted flex items-center gap-1.5 flex-wrap">
+<span class="truncate">Cascaded to Week: <span class="text-fg-primary/80">Team scaling alignment</span></span>
+</p>
+</div>
+<!-- Row Action -->
+<button class="text-caption font-caption text-fg-muted hover:text-fg-primary px-2.5 py-1 rounded border border-border-line hover:border-fg-primary bg-surface-panel transition-colors shrink-0">
+                Adjust
+              </button>
+</div>
+</div>
+</div>
+<!-- Hard Cap Capacity Limit Notice -->
+<div class="rounded-lg bg-bg-canvas border border-border-line p-3 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-area-career shrink-0 mt-0.5" data-icon="info">info</span>
+<p class="text-caption font-caption text-fg-muted leading-relaxed">
+<strong class="font-medium text-fg-primary">Capacity limit reached (3 of 3 active daily goals).</strong> 
+            The Rule of Three enforces singular focus. Complete or archive an existing item to add another.
+          </p>
+</div>
+</div>
+<!-- Dialog Footer -->
+<div class="px-6 py-4 bg-bg-canvas/50 border-t border-border-line flex items-center justify-between gap-3">
+<!-- Left Link Action -->
+<button class="text-caption font-caption text-fg-muted hover:text-fg-primary flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="archive">archive</span>
+          Archive Completed
+        </button>
+<!-- Right Button Group -->
+<div class="flex items-center gap-2.5">
+<button class="px-4 py-2 text-label-sm font-label-sm text-fg-primary bg-surface-panel hover:bg-bg-canvas border border-border-line rounded-lg transition-colors">
+            Cancel
+          </button>
+<button class="px-4 py-2 text-label-sm font-label-sm text-bg-canvas bg-fg-primary hover:bg-black rounded-lg transition-colors flex items-center gap-1.5 font-medium shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+            Save Changes
+          </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

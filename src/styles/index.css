@@ -1,0 +1,206 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+@theme inline {
+  /* semantic colors */
+  --color-bg-canvas: var(--bg-canvas);
+  --color-surface-panel: var(--surface-panel);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-muted: var(--fg-muted);
+  --color-border-line: var(--border-line);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-area-career: var(--area-career);
+  --color-area-life: var(--area-life);
+  --color-area-money: var(--area-money);
+  --color-error: var(--error);
+  --color-accent: var(--a);
+
+  /* type scale (DM Sans) */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --text-display-percent: 34px;
+  --text-display-percent--line-height: 40px;
+  --text-display-percent--letter-spacing: -0.02em;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-title-section: 15px;
+  --text-title-section--line-height: 22px;
+  --text-body-md: 14.5px;
+  --text-body-md--line-height: 22px;
+  --text-label-sm: 13px;
+  --text-label-sm--line-height: 18px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-input-base: 16px;
+  --text-input-base--line-height: 24px;
+
+  /* shape */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* named spacing */
+  --spacing-margin: 1rem;
+  --spacing-gutter: 0.5rem;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (pointer: fine) {
+  html {
+    overscroll-behavior: none;
+  }
+}
+
+body {
+  background: var(--bg-canvas);
+  color: var(--fg-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+button,
+select,
+input {
+  touch-action: manipulation;
+}
+
+button {
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* Material Symbols Outlined */
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.material-symbols-outlined.fill-icon {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* Dot: --f is the fraction (0..1) of this dot that has passed */
+.dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  border: 1.5px solid color-mix(in srgb, var(--a) 45%, transparent);
+  background: linear-gradient(
+    90deg,
+    var(--a) calc(var(--f) * 100%),
+    transparent calc(var(--f) * 100%)
+  );
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--fg-muted);
+}
+
+.dot[data-passed='true'],
+.dot[data-current='true'] {
+  border-color: var(--a);
+  color: var(--on-primary);
+}
+
+button.dot:hover {
+  border-color: var(--a);
+}
+
+/* number legibility over the partial fill */
+.dot[data-current='true'] > span {
+  text-shadow: 0 1px 1px rgb(0 0 0 / 0.4);
+}
+
+/* soft ambient ring on the current dot: opacity-only animation */
+.dot[data-current='true']::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 3px solid color-mix(in srgb, var(--a) 25%, transparent);
+  animation: dot-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* liquid wave: translateX only, compositor-friendly */
+.wave-anim {
+  animation: wave-motion 9s ease-in-out infinite;
+}
+
+.wave-anim-delayed {
+  animation: wave-motion 13s ease-in-out infinite reverse;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-25%) scale(1.04, 1);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot[data-current='true']::after,
+  .wave-anim,
+  .wave-anim-delayed {
+    animation: none;
+  }
+  button {
+    transition: none;
+  }
+}

@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dots of Time — Day View &amp; Category Water Indicators</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- DM Sans Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#2f3037",
+            "tertiary-container": "#9a6c00",
+            "tertiary-fixed-dim": "#fabc48",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#e3e1eb",
+            "secondary-container": "#89f9b0",
+            "on-primary-fixed": "#00164e",
+            "on-surface-variant": "#434654",
+            "surface-container-low": "#f4f2fc",
+            "fg-muted": "#6c6c74",
+            "surface-container-high": "#e9e7f0",
+            "secondary": "#006d3c",
+            "area-money": "#d49b28",
+            "fg-primary": "#1b1b1f",
+            "secondary-fixed": "#89f9b0",
+            "primary-fixed-dim": "#b5c4ff",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed-variant": "#5f4100",
+            "border-line": "#dcdad4",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#fffbff",
+            "area-career": "#5078f2",
+            "primary": "#2352cb",
+            "inverse-primary": "#b5c4ff",
+            "surface-panel": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#007440",
+            "bg-canvas": "#f6f5f2",
+            "on-primary-fixed-variant": "#003bae",
+            "surface-tint": "#2654ce",
+            "outline": "#747685",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffdeaa",
+            "outline-variant": "#c4c5d6",
+            "on-secondary-fixed": "#00210e",
+            "inverse-on-surface": "#f1f0f9",
+            "tertiary": "#7a5500",
+            "on-background": "#1a1b22",
+            "secondary-fixed-dim": "#6ddc96",
+            "surface-variant": "#e3e1eb",
+            "surface": "#fbf8ff",
+            "primary-fixed": "#dce1ff",
+            "primary-container": "#436ce5",
+            "error": "#ba1a1a",
+            "surface-dim": "#dad9e2",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#00522c",
+            "on-surface": "#1a1b22",
+            "on-tertiary-container": "#fffbff",
+            "background": "#fbf8ff",
+            "surface-container": "#eeedf6",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#fbf8ff",
+            "on-tertiary-fixed": "#271900",
+            "area-life": "#2fa464"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.125rem",
+            "space-md": "0.875rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "space-xl": "1.25rem",
+            "gutter": "0.5rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "input-base": ["DM Sans"],
+            "label-sm": ["DM Sans"],
+            "title-section": ["DM Sans"],
+            "caption": ["DM Sans"],
+            "headline-sm": ["DM Sans"],
+            "body-md": ["DM Sans"],
+            "display-percent": ["DM Sans"]
+          },
+          "fontSize": {
+            "input-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "title-section": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "body-md": ["14.5px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "display-percent": ["34px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined[data-weight="fill"] {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    
+    /* Subtle wave liquid pattern */
+    .liquid-wave {
+      position: absolute;
+      top: -12px;
+      left: 0;
+      width: 200%;
+      height: 16px;
+      background-repeat: repeat-x;
+      opacity: 0.35;
+      animation: waveMove 7s linear infinite;
+    }
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-fg-primary antialiased min-h-screen selection:bg-primary-fixed selection:text-fg-primary">
+<!-- Top App Navigation Bar (Shared Component: TopNavBar with active 'Day') -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-border-line dark:border-outline-variant w-full sticky top-0 z-40 transition-colors">
+<div class="flex justify-between items-center w-full px-margin max-w-[720px] mx-auto h-14">
+<!-- Brand & Date Heading Anchor -->
+<div class="flex items-center gap-3">
+<a class="text-headline-sm font-headline-sm font-medium text-fg-primary dark:text-inverse-on-surface tracking-tight flex items-center gap-2" href="#">
+<span>Dots of Time</span>
+<span class="text-fg-muted font-normal text-body-md hidden sm:inline">· Friday, October 16, 2026</span>
+</a>
+</div>
+<!-- Center / Right Nav Links & Actions -->
+<div class="flex items-center gap-6">
+<nav class="hidden sm:flex items-center gap-5 text-label-sm font-label-sm">
+<a class="text-area-career dark:text-primary-fixed border-b-2 border-area-career dark:border-primary-fixed pb-1 font-medium transition-colors" href="#">Day</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Week</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Month</a>
+<a class="text-fg-muted dark:text-outline hover:text-fg-primary dark:hover:text-inverse-on-surface pb-1 transition-colors" href="#">Year</a>
+</nav>
+<div class="flex items-center gap-1 sm:gap-2 border-l border-border-line pl-3">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-fg-muted hover:text-fg-primary hover:bg-surface-container-high transition-colors" title="Calendar schedule">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-fg-muted hover:text-fg-primary hover:bg-surface-container-high transition-colors" title="Settings">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-border-line flex items-center justify-center ml-1 text-label-sm font-medium text-fg-primary" title="User avatar">
+            FD
+          </div>
+</div>
+</div>
+</div>
+</header>
+<!-- Mobile View Tab Navigation Bar -->
+<div class="sm:hidden bg-surface border-b border-border-line px-margin py-2">
+<div class="flex justify-around text-label-sm font-label-sm">
+<span class="text-area-career border-b-2 border-area-career pb-1 font-medium">Day</span>
+<span class="text-fg-muted pb-1">Week</span>
+<span class="text-fg-muted pb-1">Month</span>
+<span class="text-fg-muted pb-1">Year</span>
+</div>
+</div>
+<!-- Primary Canvas Container (720px constraint) -->
+<main class="max-w-[720px] mx-auto px-margin pt-5 pb-12 flex flex-col gap-6">
+<!-- Day Progress & Cadence Header Card -->
+<section class="bg-surface-panel rounded-xl border border-border-line p-5">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-caption font-caption text-fg-muted uppercase tracking-wider font-medium">Today · 24-Hour Cadence</span>
+<span class="w-1.5 h-1.5 rounded-full bg-area-career animate-pulse"></span>
+</div>
+<h1 class="text-headline-sm font-headline-sm font-medium text-fg-primary">
+            Friday, Oct 16 · 14:30
+          </h1>
+<p class="text-body-md font-body-md text-fg-muted mt-0.5">
+            Afternoon focus window · Natural circadian pacing
+          </p>
+</div>
+<div class="sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-border-line flex sm:flex-col justify-between items-baseline sm:items-end">
+<div class="text-display-percent font-display-percent text-fg-primary tabular-nums">
+            60.4%
+          </div>
+<div class="text-label-sm font-label-sm text-fg-muted">
+            day elapsed (14.5 of 24h)
+          </div>
+</div>
+</div>
+</section>
+<!-- 24-Hour Dot Matrix (Cadence Grid) -->
+<section class="bg-surface-panel rounded-xl border border-border-line p-5">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="text-title-section font-title-section text-fg-primary">Cadence Grid</h2>
+<p class="text-caption font-caption text-fg-muted">Full 24-hour cycle · 1 dot = 1 hour</p>
+</div>
+<span class="text-caption font-caption text-area-career bg-primary-fixed/40 px-2.5 py-1 rounded-full font-medium">
+          Hour 14 Active
+        </span>
+</div>
+<!-- Time Axis Grid: 2 rows of 12 columns with hour tick marks -->
+<div class="space-y-4">
+<!-- Row 1: Hours 00 to 11 (Morning / Dawn) -->
+<div>
+<div class="grid grid-cols-12 gap-2 text-center text-caption font-caption text-fg-muted mb-1.5">
+<span>00</span><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
+<span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<!-- 00 to 11 are all elapsed (solid blue) -->
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="00:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="01:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="02:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="03:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="04:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="05:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="06:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="07:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="08:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="09:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="10:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="11:00 - Passed"></div>
+</div>
+</div>
+<!-- Row 2: Hours 12 to 23 (Afternoon / Evening) -->
+<div>
+<div class="grid grid-cols-12 gap-2 text-center text-caption font-caption text-fg-muted mb-1.5">
+<span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+<span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+</div>
+<div class="grid grid-cols-12 gap-2 items-center">
+<!-- 12, 13 (Passed) -->
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="12:00 - Passed"></div>
+<div class="aspect-square rounded-full bg-area-career border border-area-career transition-transform hover:scale-110" title="13:00 - Passed"></div>
+<!-- 14 (Current Active - 50% partial fill with ambient ring) -->
+<div class="aspect-square rounded-full relative p-[2px] transition-transform hover:scale-110 ring-[3px] ring-area-career/25" style="background: linear-gradient(90deg, #5078f2 50%, #ffffff 50%); border: 1.5px solid #5078f2;" title="14:00 to 15:00 - In Progress (50%)">
+<span class="sr-only">14:00 Current Hour</span>
+</div>
+<!-- 15 to 23 (Space Remaining / Future) -->
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="15:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="16:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="17:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="18:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="19:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="20:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="21:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="22:00 - Open"></div>
+<div class="aspect-square rounded-full border border-area-career/40 bg-transparent transition-transform hover:border-area-career" title="23:00 - Open"></div>
+</div>
+</div>
+</div>
+<!-- Legend Line -->
+<div class="mt-5 pt-3.5 border-t border-border-line flex flex-wrap items-center justify-between gap-3 text-caption font-caption text-fg-muted">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-area-career inline-block"></span>
+<span>Passed (14 hours)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full inline-block border border-area-career" style="background: linear-gradient(90deg, #5078f2 50%, transparent 50%);"></span>
+<span class="text-fg-primary font-medium">Current (14:00–15:00)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full border border-area-career/45 bg-transparent inline-block"></span>
+<span>Space remaining (9 hours open)</span>
+</div>
+</div>
+</section>
+<!-- Daily Dimensions (Category Water Indicators) -->
+<section class="space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+<div>
+<h2 class="text-title-section font-title-section text-fg-primary">Daily Dimensions</h2>
+<p class="text-caption font-caption text-fg-muted">Liquid capacity &amp; fulfillment pacing · Rule of Three (Cap 3 goals)</p>
+</div>
+<span class="text-caption font-caption text-area-career hover:underline cursor-pointer">Tap any reservoir to inspect ↗</span>
+</div>
+<!-- 3 Fluid Reservoir Columns Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+<!-- Reservoir 1: Career (Blue Accent, 66% Liquid Fill) -->
+<div class="bg-surface-panel rounded-xl border border-border-line overflow-hidden flex flex-col justify-between hover:border-area-career/60 transition-all cursor-pointer relative group">
+<!-- Fluid Tank Visual Header -->
+<div class="h-28 bg-surface-container-low relative border-b border-border-line overflow-hidden">
+<!-- Liquid Level (66%) -->
+<div class="absolute bottom-0 inset-x-0 h-[66%] bg-area-career/15 border-t border-area-career transition-all group-hover:bg-area-career/20">
+<div class="liquid-wave" style="background-image: radial-gradient(circle at 10px 0, transparent 8px, #5078f2 9px);"></div>
+</div>
+<!-- Indicator Label & Capacity Tag Inside Tank -->
+<div class="relative z-10 p-3 flex justify-between items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-panel/90 border border-border-line text-caption font-caption text-area-career font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career"></span>
+                Career
+              </span>
+<span class="text-headline-sm font-headline-sm font-medium text-area-career tabular-nums">
+                66%
+              </span>
+</div>
+<div class="absolute bottom-2 right-3 text-caption font-caption text-area-career/80 font-medium">
+              2 of 3 units
+            </div>
+</div>
+<!-- Card Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-caption text-area-career uppercase tracking-wider font-medium mb-1">
+                ★ The One · Anchor Goal
+              </div>
+<h3 class="text-body-md font-body-md font-medium text-fg-primary leading-snug">
+                Finalize SOC 2 audit remediations &amp; submit report
+              </h3>
+<p class="text-caption font-caption text-fg-muted mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+                Linked: SOC 2 Stage 4 security audit
+              </p>
+</div>
+<div class="pt-3 mt-4 border-t border-border-line flex items-center justify-between text-caption font-caption text-fg-muted">
+<span>2 of 3 completed</span>
+<span class="text-area-career font-medium group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                Inspect →
+              </span>
+</div>
+</div>
+</div>
+<!-- Reservoir 2: Life & Vitality (Green Accent, 33% Liquid Fill) -->
+<div class="bg-surface-panel rounded-xl border border-border-line overflow-hidden flex flex-col justify-between hover:border-area-life/60 transition-all cursor-pointer relative group">
+<!-- Fluid Tank Visual Header -->
+<div class="h-28 bg-surface-container-low relative border-b border-border-line overflow-hidden">
+<!-- Liquid Level (33%) -->
+<div class="absolute bottom-0 inset-x-0 h-[33%] bg-area-life/15 border-t border-area-life transition-all group-hover:bg-area-life/20">
+<div class="liquid-wave" style="background-image: radial-gradient(circle at 10px 0, transparent 8px, #2fa464 9px);"></div>
+</div>
+<!-- Indicator Label & Capacity Tag Inside Tank -->
+<div class="relative z-10 p-3 flex justify-between items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-panel/90 border border-border-line text-caption font-caption text-area-life font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-area-life"></span>
+                Life &amp; Vitality
+              </span>
+<span class="text-headline-sm font-headline-sm font-medium text-area-life tabular-nums">
+                33%
+              </span>
+</div>
+<div class="absolute bottom-2 right-3 text-caption font-caption text-area-life/80 font-medium">
+              1 of 3 units
+            </div>
+</div>
+<!-- Card Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-caption text-area-life uppercase tracking-wider font-medium mb-1">
+                • Primary Anchor
+              </div>
+<h3 class="text-body-md font-body-md font-medium text-fg-primary leading-snug">
+                5 km tempo run &amp; 20m breathwork stillness
+              </h3>
+<p class="text-caption font-caption text-fg-muted mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+                Linked: 30 km run &amp; mobility
+              </p>
+</div>
+<div class="pt-3 mt-4 border-t border-border-line flex items-center justify-between text-caption font-caption text-fg-muted">
+<span>1 of 3 completed</span>
+<span class="text-area-life font-medium group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                Inspect →
+              </span>
+</div>
+</div>
+</div>
+<!-- Reservoir 3: Money (Amber Accent, 100% Liquid Fill) -->
+<div class="bg-surface-panel rounded-xl border border-border-line overflow-hidden flex flex-col justify-between hover:border-area-money/60 transition-all cursor-pointer relative group">
+<!-- Fluid Tank Visual Header -->
+<div class="h-28 bg-surface-container-low relative border-b border-border-line overflow-hidden">
+<!-- Liquid Level (100% full capacity) -->
+<div class="absolute bottom-0 inset-x-0 h-[100%] bg-area-money/20 border-t border-area-money transition-all group-hover:bg-area-money/25">
+<div class="liquid-wave" style="background-image: radial-gradient(circle at 10px 0, transparent 8px, #d49b28 9px);"></div>
+</div>
+<!-- Indicator Label & Capacity Tag Inside Tank -->
+<div class="relative z-10 p-3 flex justify-between items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-panel/90 border border-border-line text-caption font-caption text-area-money font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-area-money"></span>
+                Money
+              </span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-area-money text-[18px]" data-weight="fill">check_circle</span>
+<span class="text-headline-sm font-headline-sm font-medium text-area-money tabular-nums">
+                  100%
+                </span>
+</div>
+</div>
+<div class="absolute bottom-2 right-3 text-caption font-caption text-area-money font-medium bg-surface-panel/85 px-1.5 py-0.5 rounded border border-area-money/20">
+              Capacity reached
+            </div>
+</div>
+<!-- Card Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-caption text-area-money uppercase tracking-wider font-medium mb-1">
+                • Primary Anchor
+              </div>
+<h3 class="text-body-md font-body-md font-medium text-fg-primary leading-snug">
+                Review angel distribution schedule &amp; sign approvals
+              </h3>
+<p class="text-caption font-caption text-fg-muted mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+                Linked: Finalize quarterly angel distribution
+              </p>
+</div>
+<div class="pt-3 mt-4 border-t border-border-line flex items-center justify-between text-caption font-caption text-fg-muted">
+<span>3 of 3 completed</span>
+<span class="text-area-money font-medium group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                Inspect →
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dimension Extensibility Trigger -->
+<button class="w-full py-2.5 px-4 rounded-xl border border-dashed border-border-line hover:border-fg-muted text-caption font-caption text-fg-muted hover:text-fg-primary transition-colors flex items-center justify-center gap-2 bg-surface-panel/50">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Custom Dimension (e.g., Creative Arts, Philosophy, Sanctuary) · Cap 4 max</span>
+</button>
+</section>
+<!-- Liquid Pacing & Daily Cadence Insight Card -->
+<section class="bg-surface-panel rounded-xl border border-border-line p-5">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low border border-border-line flex items-center justify-center text-area-career shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="water_drop">water_drop</span>
+</div>
+<div class="space-y-3 flex-1">
+<div>
+<h3 class="text-title-section font-title-section text-fg-primary">
+              Liquid Pacing &amp; Daily Rhythm
+            </h3>
+<p class="text-body-md font-body-md text-fg-muted mt-1 leading-relaxed">
+              Daily water reservoirs translate overarching weekly intent into calm, singular focus blocks. When your reservoir reaches capacity, protect your evening for stillness and restorative presence without anxious overplanning.
+            </p>
+</div>
+<!-- Status Tags Row -->
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-caption font-caption bg-area-career/10 text-area-career border border-area-career/20">
+<span class="w-1.5 h-1.5 rounded-full bg-area-career"></span>
+              Career on track: 66%
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-caption font-caption bg-area-life/10 text-area-life border border-area-life/20">
+<span class="w-1.5 h-1.5 rounded-full bg-area-life"></span>
+              Vitality steady: 33%
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-caption font-caption bg-area-money/10 text-area-money border border-area-money/20 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-area-money"></span>
+              Wealth complete: 100%
+            </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Page Footer -->
+<footer class="pt-4 border-t border-border-line flex flex-col sm:flex-row items-center justify-between text-caption font-caption text-fg-muted gap-2 text-center sm:text-left">
+<div>
+<span>Dots of Time</span> · Intentional pacing &amp; calm presence
+      </div>
+<div class="flex items-center gap-3">
+<a class="hover:text-fg-primary transition-colors" href="#">Philosophy</a>
+<span>·</span>
+<a class="hover:text-fg-primary transition-colors" href="#">Keyboard shortcuts <kbd class="px-1.5 py-0.5 bg-surface-container-high rounded border border-border-line text-[10px]">?</kbd></a>
+<span>·</span>
+<span>v1.2</span>
+</div>
+</footer>
+</main>
+</body></html>

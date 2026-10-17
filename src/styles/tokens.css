@@ -1,0 +1,81 @@
+:root {
+  /* neutrals, light */
+  --bg-canvas: #f6f5f2;
+  --surface-panel: #ffffff;
+  --surface-container: #eeedf6;
+  --surface-container-low: #f4f2fc;
+  --surface-container-high: #e9e7f0;
+  --fg-primary: #1b1b1f;
+  --fg-muted: #6c6c74;
+  --border-line: #dcdad4;
+
+  /* primary + inversion */
+  --primary: #2352cb;
+  --on-primary: #ffffff;
+  --inverse-surface: #2f3037;
+  --inverse-on-surface: #f1f0f9;
+
+  /* area colors */
+  --area-career: #5078f2;
+  --area-life: #2fa464;
+  --area-money: #d49b28;
+
+  /* error */
+  --error: #ba1a1a;
+
+  /* time-dot accent follows Career blue */
+  --a: var(--area-career);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg-canvas: #131318;
+    --surface-panel: #1b1c23;
+    --surface-container: #24252d;
+    --surface-container-low: #1f2027;
+    --surface-container-high: #2b2c35;
+    --fg-primary: #e5e3ee;
+    --fg-muted: #9b99ab;
+    --border-line: #34353f;
+
+    --primary: #b5c4ff;
+    --on-primary: #00164e;
+    --inverse-surface: #e6e4f0;
+    --inverse-on-surface: #2b2c36;
+
+    /* fixed-dim variants keep even perceived brightness in dark */
+    --area-career: #b5c4ff;
+    --area-life: #6ddc96;
+    --area-money: #fabc48;
+
+    --error: #ffb4ab;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg-canvas: #131318;
+  --surface-panel: #1b1c23;
+  --surface-container: #24252d;
+  --surface-container-low: #1f2027;
+  --surface-container-high: #2b2c35;
+  --fg-primary: #e5e3ee;
+  --fg-muted: #9b99ab;
+  --border-line: #34353f;
+
+  --primary: #b5c4ff;
+  --on-primary: #00164e;
+  --inverse-surface: #e6e4f0;
+  --inverse-on-surface: #2b2c36;
+
+  --area-career: #b5c4ff;
+  --area-life: #6ddc96;
+  --area-money: #fabc48;
+
+  --error: #ffb4ab;
+
+  color-scheme: dark;
+}
