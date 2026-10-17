@@ -11,6 +11,7 @@ const ROWS: readonly number[][] = [
 /** 24 dots in two rows of 12, one per hour, with hour tick labels. */
 export function DayDots({ now }: { now: Date }) {
   const p = progress('d', now)
+  const delayFor = (h: number) => (h / 23) * 380
 
   return (
     <div className="space-y-4">
@@ -28,6 +29,7 @@ export function DayDots({ now }: { now: Date }) {
                 fraction={dotFraction(p, 24, h)}
                 ariaLabel={`${pad(h)}:00`}
                 title={`${pad(h)}:00`}
+                delayMs={delayFor(h)}
                 className="aspect-square transition-transform hover:scale-110"
               />
             ))}

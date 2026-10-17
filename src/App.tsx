@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+﻿import { useCallback, useEffect, useState } from 'react'
 import { useNow } from './hooks/useNow'
 import { useTheme } from './hooks/useTheme'
 import { useShortcuts } from './hooks/useShortcuts'
 import { useAppStore } from './store/useAppStore'
-import { useWinsStore } from './store/useWinsStore'
-import { areaStats } from './lib/areas'
-import { periodKey } from './lib/keys'
 import { TopNavBar } from './components/TopNavBar'
 import { PeriodHeader } from './components/PeriodHeader'
 import { CadenceGrid } from './components/CadenceGrid'
@@ -15,7 +12,6 @@ import { WeekDots } from './components/dots/WeekDots'
 import { MonthDots } from './components/dots/MonthDots'
 import { YearDots } from './components/dots/YearDots'
 import { DimensionsSection } from './components/dimensions/DimensionsSection'
-import { GuidanceCard } from './components/GuidanceCard'
 import { SettingsPanel } from './components/SettingsPanel'
 import { SiteFooter } from './components/SiteFooter'
 import { Toast } from './components/Toast'
@@ -51,7 +47,7 @@ const GRID_TITLE: Record<Scale, string> = {
 
 /** half-filled "current" legend swatch */
 const CURRENT_SWATCH =
-  'border border-area-career bg-[linear-gradient(90deg,var(--area-career)_50%,transparent_50%)]'
+  'border border-cat-career bg-[linear-gradient(90deg,var(--cat-career)_50%,transparent_50%)]'
 
 function Pill({ children }: { children: string }) {
   return (
@@ -59,12 +55,6 @@ function Pill({ children }: { children: string }) {
       {children}
     </span>
   )
-}
-
-/** wins of the currently viewed period */
-function usePeriodWins(view: Scale, now: Date) {
-  const key = periodKey(view, now)
-  return useWinsStore((s) => s.byPeriod[key]) ?? []
 }
 
 export default function App() {
@@ -99,8 +89,6 @@ export default function App() {
   }, [helpKey])
 
   const p = progress(view, now)
-  const list = usePeriodWins(view, now)
-  const stats = areaStats(list)
 
   const pill = (() => {
     switch (view) {
@@ -113,7 +101,7 @@ export default function App() {
       case 'y':
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full border border-border-line bg-bg-canvas px-2.5 py-1 text-caption whitespace-nowrap text-fg-primary">
-            <span className="h-2 w-2 rounded-full bg-area-career" />
+            <span className="h-2 w-2 rounded-full bg-cat-career" />
             Current: Day {dayOfYear(now)} ({monthShort(now)} {now.getDate()})
           </span>
         )
@@ -125,22 +113,22 @@ export default function App() {
       case 'd': {
         const h = now.getHours()
         const items: LegendItem[] = [
-          { swatch: 'bg-area-career', label: `Passed (${h} hours)` },
+          { swatch: 'bg-cat-career', label: `Passed (${h} hours)` },
           {
             swatch: CURRENT_SWATCH,
             label: `Current (${String(h).padStart(2, '0')}:00–${String((h + 1) % 24).padStart(2, '0')}:00)`,
             strong: true,
           },
-          { swatch: 'border border-area-career/45', label: `Space remaining (${23 - h} hours open)` },
+          { swatch: 'border border-cat-career/45', label: `Space remaining (${23 - h} hours open)` },
         ]
         return <GridLegend items={items} />
       }
       case 'w': {
         const dayIdx = (now.getDay() + 6) % 7
         const items: LegendItem[] = [
-          { swatch: 'bg-area-career', label: `Passed (${dayIdx} days)` },
+          { swatch: 'bg-cat-career', label: `Passed (${dayIdx} days)` },
           { swatch: CURRENT_SWATCH, label: `Today (${monthShort(now)} ${now.getDate()})` },
-          { swatch: 'border border-area-career/50', label: `Space remaining (${6 - dayIdx} days)` },
+          { swatch: 'border border-cat-career/50', label: `Space remaining (${6 - dayIdx} days)` },
         ]
         return <GridLegend items={items} />
       }
@@ -148,9 +136,9 @@ export default function App() {
         const dim = now.getDate()
         const total = daysInMonth(now.getFullYear(), now.getMonth())
         const items: LegendItem[] = [
-          { swatch: 'bg-area-career', label: `Passed (${dim - 1} days)` },
+          { swatch: 'bg-cat-career', label: `Passed (${dim - 1} days)` },
           { swatch: CURRENT_SWATCH, label: `Today (${monthShort(now)} ${dim})` },
-          { swatch: 'border border-area-career/45', label: `Space remaining (${total - dim} days)` },
+          { swatch: 'border border-cat-career/45', label: `Space remaining (${total - dim} days)` },
         ]
         return <GridLegend items={items} />
       }
@@ -158,9 +146,9 @@ export default function App() {
         const doy = dayOfYear(now)
         const total = daysInYear(now.getFullYear())
         const items: LegendItem[] = [
-          { swatch: 'bg-area-career', label: 'Passed', strong: true },
-          { swatch: 'bg-area-career ring-2 ring-area-career/30 ring-offset-1', label: 'Today', strong: true },
-          { swatch: 'border border-area-career/50', label: 'Remaining', strong: true },
+          { swatch: 'bg-cat-career', label: 'Passed', strong: true },
+          { swatch: 'bg-cat-career ring-2 ring-cat-career/30 ring-offset-1', label: 'Today', strong: true },
+          { swatch: 'border border-cat-career/50', label: 'Remaining', strong: true },
         ]
         return (
           <GridLegend
@@ -192,7 +180,7 @@ export default function App() {
       <main
         id="main"
         className={`mx-auto flex max-w-[720px] flex-col px-margin pt-5 pb-12 ${
-          view === 'y' ? 'gap-8' : 'gap-6'
+          view === 'y' ? 'gap-2' : 'gap-6'
         }`}
       >
         <PeriodHeader
@@ -220,7 +208,7 @@ export default function App() {
 
         <DimensionsSection scale={view} now={now} />
 
-        <GuidanceCard scale={view} stats={stats} />
+        {/* <GuidanceCard scale={view} stats={stats} /> */}
 
         {settingsOpen && <SettingsPanel />}
 

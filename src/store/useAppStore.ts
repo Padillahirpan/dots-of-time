@@ -19,6 +19,14 @@ export const useAppStore = create<AppState>()(
       setView: (view) => set({ view }),
       setTheme: (theme) => set({ theme }),
     }),
-    { name: 'dots-app', version: 2 },
+    {
+      name: 'dots-app',
+      version: 2,
+      // v1 also stored hue/areaHues (old accent picker); they were dropped in v2
+      migrate: (persisted) => {
+        const s = persisted as Partial<Pick<AppState, 'view' | 'theme'>>
+        return { view: s.view ?? 'd', theme: s.theme ?? 'system' }
+      },
+    },
   ),
 )

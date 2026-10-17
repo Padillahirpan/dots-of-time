@@ -15,16 +15,19 @@
   --inverse-surface: #2f3037;
   --inverse-on-surface: #f1f0f9;
 
-  /* area colors */
-  --area-career: #5078f2;
-  --area-life: #2fa464;
-  --area-money: #d49b28;
+  /* category palette, light */
+  --cat-health: #2fa464;
+  --cat-family: #d5568e;
+  --cat-career: #5078f2;
+  --cat-money: #d49b28;
+  --cat-growth: #8a63d2;
+  --cat-play: #1a9cb8;
 
   /* error */
   --error: #ba1a1a;
 
-  /* time-dot accent follows Career blue */
-  --a: var(--area-career);
+  /* time-dot accent */
+  --a: var(--cat-career);
 
   color-scheme: light;
 }
@@ -46,9 +49,12 @@
     --inverse-on-surface: #2b2c36;
 
     /* fixed-dim variants keep even perceived brightness in dark */
-    --area-career: #b5c4ff;
-    --area-life: #6ddc96;
-    --area-money: #fabc48;
+    --cat-health: #6ddc96;
+    --cat-family: #f5a8cc;
+    --cat-career: #b5c4ff;
+    --cat-money: #fabc48;
+    --cat-growth: #c8b5f0;
+    --cat-play: #8fd4e6;
 
     --error: #ffb4ab;
 
@@ -71,9 +77,12 @@
   --inverse-surface: #e6e4f0;
   --inverse-on-surface: #2b2c36;
 
-  --area-career: #b5c4ff;
-  --area-life: #6ddc96;
-  --area-money: #fabc48;
+  --cat-health: #6ddc96;
+  --cat-family: #f5a8cc;
+  --cat-career: #b5c4ff;
+  --cat-money: #fabc48;
+  --cat-growth: #c8b5f0;
+  --cat-play: #8fd4e6;
 
   --error: #ffb4ab;
 

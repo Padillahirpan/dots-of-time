@@ -1,46 +1,68 @@
-import { AREA_THEME, type AreaStat } from '../../lib/areas'
-import { AREA_LABELS, type Area } from '../../types'
+import { CATEGORY_META, CATEGORY_THEME } from '../../lib/categories'
+import type { Win } from '../../types'
 import { Icon } from '../Icon'
 import { LiquidWave } from './LiquidWave'
 
-interface ReservoirCardProps {
-  area: Area
-  stat: AreaStat
+interface SlotCardProps {
+  /** 1-based slot number */
+  slot: number
+  win: Win | null
   /** tank variant is the day screen; flat is week/month/year */
   variant: 'tank' | 'flat'
+  /** completed goals over the three slots, 0..100 */
+  pct: number
+  doneCount: number
   /** e.g. "Month" for "Linked to Month: …"; null hides the link note */
   parentName: string | null
   linkedTitle?: string
   onInspect: () => void
 }
 
-/** Liquid reservoir card for one dimension (Career, Life & Vitality, Money). */
-export function ReservoirCard({
-  area,
-  stat,
+/** One of the three period slots, drawn as a liquid reservoir. */
+export function SlotCard({
+  slot,
+  win,
   variant,
+  pct,
+  doneCount,
   parentName,
   linkedTitle,
   onInspect,
-}: ReservoirCardProps) {
-  const t = AREA_THEME[area]
-  const label = AREA_LABELS[area]
-  const pct = stat.pct
-  const full = stat.done >= 3
+}: SlotCardProps) {
+  // empty slot: a dashed invite
+  if (!win) {
+    return (
+      <button
+        type="button"
+        onClick={onInspect}
+        aria-label={`Add goal for slot ${slot}`}
+        className="flex min-h-[210px] w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border-line bg-surface-panel/40 p-4 text-center transition-colors hover:border-fg-primary/50"
+      >
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border-line text-fg-muted">
+          <Icon name="add" />
+        </span>
+        <span className="text-label-sm font-medium text-fg-primary">Empty slot</span>
+        <span className="text-caption text-fg-muted">
+          Add a goal from an unused category · Slot {slot} of 3
+        </span>
+      </button>
+    )
+  }
 
-  const anchorTag = stat.one ? (
+  const t = CATEGORY_THEME[win.category]
+  const meta = CATEGORY_META[win.category]
+
+  const anchorTag = win.one ? (
     <div className={`mb-1 flex items-center gap-1 text-[11px] font-medium tracking-wide uppercase ${t.text}`}>
       <Icon name="star" size={14} fill />
       <span>The One · Anchor Goal</span>
     </div>
-  ) : stat.primary ? (
+  ) : (
     <div className="mb-1 flex items-center gap-1 text-[11px] font-medium tracking-wide uppercase text-fg-muted">
       <span className={`h-1.5 w-1.5 rounded-full ${t.dot}`} />
-      <span>Primary Anchor</span>
+      <span>Slot {slot} · {meta.label}</span>
     </div>
-  ) : null
-
-  const title = stat.primary?.title ?? 'No goals yet'
+  )
 
   const linkNote =
     linkedTitle &&
@@ -64,8 +86,8 @@ export function ReservoirCard({
         </div>
       )}
       <div className="flex items-center justify-between text-caption">
-        <span className={full ? `${t.text} font-medium` : 'text-fg-muted'}>
-          {stat.done} of 3 completed
+        <span className={win.done ? `${t.text} font-medium` : 'text-fg-muted'}>
+          {doneCount} of 3 completed
         </span>
         <button
           type="button"
@@ -94,30 +116,24 @@ export function ReservoirCard({
             <span
               className={`inline-flex items-center gap-1.5 rounded-full border border-border-line bg-surface-panel/90 px-2 py-0.5 text-caption font-medium ${t.text}`}
             >
-              <span className={`h-1.5 w-1.5 rounded-full ${t.dot}`} />
-              {label}
+              <Icon name={meta.icon} size={14} />
+              {meta.label}
             </span>
             <span className="flex items-center gap-1">
-              {full && <Icon name="check_circle" size={18} className={t.text} fill />}
+              {win.done && <Icon name="check_circle" size={18} className={t.text} fill />}
               <span className={`text-headline-sm font-medium tabular-nums ${t.text}`}>{pct}%</span>
             </span>
           </div>
           <div className="absolute right-3 bottom-2 text-caption font-medium text-fg-muted">
-            {full ? (
-              <span className="rounded border border-border-line bg-surface-panel/85 px-1.5 py-0.5">
-                Capacity reached
-              </span>
-            ) : (
-              <span className={t.text}>
-                {stat.done} of 3 units
-              </span>
-            )}
+            <span className="rounded border border-border-line bg-surface-panel/85 px-1.5 py-0.5">
+              Slot {slot} of 3
+            </span>
           </div>
         </div>
         <div className="flex flex-1 flex-col justify-between p-4">
           <div>
             {anchorTag}
-            <h3 className="text-body-md font-medium leading-snug text-fg-primary">{title}</h3>
+            <h3 className="text-body-md font-medium leading-snug text-fg-primary">{win.title}</h3>
             {linkNote}
           </div>
           {footer}
@@ -139,10 +155,12 @@ export function ReservoirCard({
 
       <div className="relative z-10">
         <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className={`h-2.5 w-2.5 rounded-full ${t.dot}`} />
-            <span className="text-label-sm font-medium text-fg-primary">{label}</span>
-          </div>
+          <span
+            className={`inline-flex items-center gap-1.5 ${t.text} text-label-sm font-medium`}
+          >
+            <Icon name={meta.icon} size={15} />
+            {meta.label}
+          </span>
           <span
             className={`rounded-full border px-2 py-0.5 text-caption font-medium tabular-nums ${t.chipBg} ${t.chipBorder} ${t.text}`}
           >
@@ -151,7 +169,7 @@ export function ReservoirCard({
         </div>
         {anchorTag}
         <h3 className="line-clamp-2 text-body-md font-medium leading-snug text-fg-primary">
-          {title}
+          {win.title}
         </h3>
         {linkNote}
       </div>

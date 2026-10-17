@@ -52,6 +52,7 @@ export function YearDots({ now }: { now: Date }) {
               fraction={fraction}
               ariaLabel={label}
               title={label}
+              delayMs={(i / (count - 1)) * 600}
               className="z-0 aspect-square w-full transition-transform hover:scale-125 data-current:z-10"
               onClick={(e) => show(label, e.currentTarget)}
               onPointerEnter={(e) => show(label, e.currentTarget)}

@@ -10,6 +10,8 @@ interface DotProps {
   label?: string
   sizeClass?: string
   className?: string
+  /** stagger delay for the entrance animation, in ms */
+  delayMs?: number
   /** renders a <button> instead of a <span> (interactive dots, year grid) */
   interactive?: boolean
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
@@ -32,6 +34,7 @@ export function Dot({
   label,
   sizeClass = '',
   className = '',
+  delayMs,
   interactive = false,
   onClick,
   onPointerEnter,
@@ -41,8 +44,11 @@ export function Dot({
 }: DotProps) {
   const passed = fraction >= 1
   const current = fraction > 0 && fraction < 1
-  const cls = `dot ${sizeClass} ${className}`.trim()
-  const style = { '--f': fraction } as CSSProperties
+  const cls = `dot ${sizeClass} ${delayMs !== undefined ? 'dot-in' : ''} ${className}`.trim()
+  const style = {
+    '--f': fraction,
+    ...(delayMs !== undefined ? { '--d': `${delayMs}ms` } : {}),
+  } as CSSProperties
 
   if (interactive) {
     return (

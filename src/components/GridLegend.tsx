@@ -1,5 +1,5 @@
-export interface LegendItem {
-  /** full class list for the swatch, e.g. "bg-area-career" */
+﻿export interface LegendItem {
+  /** full class list for the swatch, e.g. "bg-cat-career" */
   swatch: string
   label: string
   strong?: boolean

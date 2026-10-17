@@ -12,13 +12,11 @@ describe('App', () => {
     }
   })
 
-  it('shows the day view with percent, hour dots, and dimensions', () => {
+  it('shows the day view with percent, hour dots, and three empty slots', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: 'Daily Dimensions' })).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Your three' })).toBeTruthy()
     expect(screen.getByText(/\d+\.\d%/)).toBeTruthy()
     expect(screen.getAllByRole('img', { name: /\d{2}:00/ }).length).toBe(24)
-    expect(screen.getByText('Career')).toBeTruthy()
-    expect(screen.getByText('Life & Vitality')).toBeTruthy()
-    expect(screen.getByText('Money')).toBeTruthy()
+    expect(screen.getAllByRole('button', { name: /Add goal for slot/ }).length).toBe(3)
   })
 })

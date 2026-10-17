@@ -7,7 +7,7 @@ export function SiteFooter({ onShortcuts }: SiteFooterProps) {
   return (
     <footer className="flex flex-col items-center justify-between gap-2 border-t border-border-line pt-4 text-caption text-fg-muted sm:flex-row">
       <div>
-        <span className="font-medium text-fg-primary">Dots of Time</span> · Intentional pacing
+        <span className="font-medium text-fg-primary">© 2023 DOT Made with love and coffee by Ipung</span> · Intentional pacing
         &amp; calm presence
       </div>
       <div className="flex items-center gap-3">

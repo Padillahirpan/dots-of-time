@@ -1,41 +1,39 @@
-import { AREA_THEME, type AreaStat } from '../lib/areas'
-import { AREAS } from '../types'
+import { CATEGORY_META, CATEGORY_THEME, type PeriodStats } from '../lib/categories'
 import { Icon } from './Icon'
 
 const COPY = {
   d: {
     title: 'Liquid Pacing & Daily Rhythm',
-    body: 'Daily water reservoirs translate overarching weekly intent into calm, singular focus blocks. When your reservoir reaches capacity, protect your evening for stillness and restorative presence without anxious overplanning.',
+    body: 'The daily three translates weekly intent into calm, singular focus blocks. When a slot is done, its reservoir rises by a third — protect your evening for stillness without anxious overplanning.',
   },
   w: {
     title: 'Liquid Pacing & Weekly Cadence',
-    body: 'Weekly water reservoirs translate overarching monthly vision into manageable bursts of deliberate attention. Once your reservoir touches capacity, protect Saturday and Sunday for rejuvenation without anxious overplanning.',
+    body: 'The weekly three turns monthly vision into manageable bursts of deliberate attention. Once a reservoir touches capacity, protect Saturday and Sunday for rejuvenation without anxious overplanning.',
   },
   m: {
     title: 'Liquid Pacing & Monthly Horizon',
-    body: 'Monthly water reservoirs bridge the gap between daily execution and your annual vision. Once your reservoir fills to equilibrium, protect mental bandwidth and allow remaining days to flow without hurried overextension.',
+    body: 'The monthly three bridges daily execution and your annual vision. Once your reservoir fills to equilibrium, protect mental bandwidth and let remaining days flow without hurried overextension.',
   },
   y: {
     title: 'Liquid Pacing & Capacity',
-    body: 'Water reservoirs represent finite energetic capacity rather than hurried checklists. When a reservoir fills, that life domain has achieved annual equilibrium; no further obligations need be forced into it. Outlined dots ahead mark open space, quiet rest, and seasonal possibility.',
+    body: 'Reservoirs represent finite energetic capacity rather than hurried checklists. When a reservoir fills, the year has found its balance; outlined dots ahead mark open space, quiet rest, and seasonal possibility.',
   },
 } as const
 
-const CHIP_WORDS = ['Career on track', 'Vitality steady', 'Wealth complete'] as const
-
 interface GuidanceCardProps {
   scale: keyof typeof COPY
-  stats: Record<number, AreaStat>
+  stats: PeriodStats
 }
 
-/** Unobtrusive liquid-pacing guidance with per-area status chips. */
+/** Unobtrusive liquid-pacing guidance with per-category status chips. */
 export function GuidanceCard({ scale, stats }: GuidanceCardProps) {
   const copy = COPY[scale]
+  const filled = stats.slots.filter((w) => w !== null)
 
   return (
     <section className="flex flex-col gap-4 rounded-xl border border-border-line bg-surface-panel p-5">
       <div className="flex items-start gap-3.5">
-        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border-line bg-surface-container-low text-area-career">
+        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border-line bg-surface-container-low text-cat-career">
           <Icon name="water_drop" fill />
         </div>
         <div>
@@ -47,18 +45,26 @@ export function GuidanceCard({ scale, stats }: GuidanceCardProps) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 border-t border-border-line pt-3">
-        {AREAS.map((area, i) => {
-          const t = AREA_THEME[area]
+        {filled.length === 0 && (
+          <span className="text-caption text-fg-muted">
+            No goals yet — {stats.pct}% · 0 of 3 done
+          </span>
+        )}
+        {filled.map((w) => {
+          const t = CATEGORY_THEME[w.category]
           return (
             <span
-              key={area}
+              key={w.id}
               className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-caption ${t.chipBg} ${t.chipBorder} ${t.text}`}
             >
-              <span className={`h-1.5 w-1.5 rounded-full ${t.dot}`} />
-              {CHIP_WORDS[i]}: <strong className="font-medium">{stats[area].pct}%</strong>
+              <Icon name={CATEGORY_META[w.category].icon} size={13} />
+              {CATEGORY_META[w.category].label} · {w.done ? 'done' : 'open'}
             </span>
           )
         })}
+        <span className="ml-auto text-caption text-fg-muted tabular-nums">
+          {stats.done} of 3 · {stats.pct}%
+        </span>
       </div>
     </section>
   )

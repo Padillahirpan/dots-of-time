@@ -15,9 +15,12 @@
   --color-on-primary: var(--on-primary);
   --color-inverse-surface: var(--inverse-surface);
   --color-inverse-on-surface: var(--inverse-on-surface);
-  --color-area-career: var(--area-career);
-  --color-area-life: var(--area-life);
-  --color-area-money: var(--area-money);
+  --color-cat-health: var(--cat-health);
+  --color-cat-family: var(--cat-family);
+  --color-cat-career: var(--cat-career);
+  --color-cat-money: var(--cat-money);
+  --color-cat-growth: var(--cat-growth);
+  --color-cat-play: var(--cat-play);
   --color-error: var(--error);
   --color-accent: var(--a);
 
@@ -156,11 +159,30 @@ button.dot:hover {
 .dot[data-current='true']::after {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -5px;
   border-radius: inherit;
-  border: 3px solid color-mix(in srgb, var(--a) 25%, transparent);
-  animation: dot-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border: 7px solid color-mix(in srgb, var(--a) 40%, transparent);
+  animation: dot-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   pointer-events: none;
+}
+
+/* entrance: dots ripple in reading order when a scale is selected.
+   --d is the stagger delay set per dot by the grid. `backwards` holds
+   the from-state during the delay and releases transform afterwards,
+   so hover scaling keeps working once the wave has passed. */
+@keyframes dot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.dot-in {
+  animation: dot-in 300ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--d, 0ms);
 }
 
 @keyframes dot-pulse {
@@ -169,17 +191,27 @@ button.dot:hover {
     opacity: 1;
   }
   50% {
+    opacity: 0.45;
+  }
+  70% {
     opacity: 0.25;
   }
 }
 
 /* liquid wave: translateX only, compositor-friendly */
 .wave-anim {
-  animation: wave-motion 9s ease-in-out infinite;
+  animation: wave-motion 4s ease-in-out infinite;
 }
+/* .wave-anim {
+  animation: wave-motion 4s linear infinite;
+} */
 
+/* .wave-anim-delayed {
+  animation: wave-motion 7s linear infinite reverse;
+} */
+ 
 .wave-anim-delayed {
-  animation: wave-motion 13s ease-in-out infinite reverse;
+  animation: wave-motion 7s ease-in-out infinite reverse;
 }
 
 @keyframes wave-motion {
@@ -189,15 +221,13 @@ button.dot:hover {
   50% {
     transform: translateX(-25%) scale(1.04, 1);
   }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dot[data-current='true']::after,
   .wave-anim,
-  .wave-anim-delayed {
+  .wave-anim-delayed,
+  .dot-in {
     animation: none;
   }
   button {

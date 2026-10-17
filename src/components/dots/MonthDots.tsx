@@ -36,6 +36,7 @@ export function MonthDots({ now }: { now: Date }) {
               sizeClass="w-9 h-9"
               ariaLabel={monthDayLabel(now, day)}
               title={monthDayLabel(now, day)}
+              delayMs={(i / (count - 1)) * 420}
             />
           )
         })}

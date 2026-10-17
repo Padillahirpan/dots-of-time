@@ -1,21 +1,27 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { AREA_CAP } from '../lib/areas'
-import type { Win } from '../types'
+import { PERIOD_CAP } from '../lib/categories'
+import type { Category, Win } from '../types'
 
 interface WinsState {
   byPeriod: Record<string, Win[]>
+  /** adds a win; enforces the 3-goal cap and one-per-category rule */
   add: (key: string, w: Omit<Win, 'id' | 'done' | 'one'>) => boolean
   toggleDone: (key: string, id: string) => void
   setOne: (key: string, id: string) => void
   remove: (key: string, id: string) => void
-  /** patches a win (title, area, progress, note, done, …) */
+  /** patches a win (title, category, progress, note, …) */
   update: (key: string, id: string, patch: Partial<Omit<Win, 'id'>>) => void
   /** re-inserts a win at its old index (undo) */
   insert: (key: string, index: number, win: Win) => void
 }
 
-export const MAX_PER_AREA = AREA_CAP
+/** v1 stored `area: 0 | 1 | 2` (Career / Life / Money). */
+const LEGACY_AREA: Record<number, Category> = {
+  0: 'career',
+  1: 'health',
+  2: 'money',
+}
 
 export const useWinsStore = create<WinsState>()(
   persist(
@@ -23,8 +29,9 @@ export const useWinsStore = create<WinsState>()(
       byPeriod: {},
       add: (key, w) => {
         const list = get().byPeriod[key] ?? []
-        const inArea = list.filter((x) => x.area === w.area).length
-        if (inArea >= AREA_CAP || !w.title.trim()) return false
+        if (list.length >= PERIOD_CAP) return false
+        if (!w.title.trim()) return false
+        if (list.some((x) => x.category === w.category)) return false
         const win: Win = { ...w, id: crypto.randomUUID(), done: false, one: false }
         set({ byPeriod: { ...get().byPeriod, [key]: [...list, win] } })
         return true
@@ -69,6 +76,19 @@ export const useWinsStore = create<WinsState>()(
           return { byPeriod: { ...s.byPeriod, [key]: list } }
         }),
     }),
-    { name: 'dots-wins', version: 1 },
+    {
+      name: 'dots-wins',
+      version: 2,
+      migrate: (persisted) => {
+        const byPeriod: Record<string, Win[]> = {}
+        for (const [k, wins] of Object.entries((persisted as { byPeriod?: Record<string, unknown> })?.byPeriod ?? {})) {
+          byPeriod[k] = (wins as Win[]).map((w) => ({
+            ...w,
+            category: LEGACY_AREA[w.category as unknown as number] ?? 'career',
+          }))
+        }
+        return { byPeriod }
+      },
+    },
   ),
 )

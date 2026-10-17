@@ -1,25 +1,25 @@
 import { useState } from 'react'
-import { AREA_THEME, AREA_VAR } from '../../lib/areas'
+import { CATEGORY_META, CATEGORY_THEME, CATEGORY_VAR } from '../../lib/categories'
 import { parentScaleName } from '../../lib/keys'
 import { monthShort } from '../../lib/format'
 import { weekOfYear } from '../../lib/time'
-import { AREA_LABELS, AREAS, type Area, type Scale, type Win } from '../../types'
+import { CATEGORIES, type Category, type Scale, type Win } from '../../types'
 import { Icon } from '../Icon'
 import { Modal } from './Modal'
 
 /** patch applied to the store; "one" is handled separately for exclusivity */
-export type AdjustPatch = Partial<Pick<Win, 'title' | 'area' | 'progress' | 'note' | 'done'>>
+export type AdjustPatch = Partial<Pick<Win, 'title' | 'category' | 'progress' | 'note' | 'done'>>
 
 interface AdjustDialogProps {
   win: Win
-  /** 1-based position of the win within its area list */
+  /** 1-based position of the win within the period */
   slot: number
   scale: Scale
   now: Date
   /** wins of the next larger scale, for the cascade card */
   parents: Win[]
-  /** true when `area` already holds 3 wins (blocks moves into it) */
-  isAreaFull: (area: Area) => boolean
+  /** true when another goal in this period already uses the category */
+  usedElsewhere: (c: Category) => boolean
   onSave: (patch: AdjustPatch, one: boolean) => void
   onDelete: () => void
   onClose: () => void
@@ -32,21 +32,21 @@ export function AdjustDialog({
   scale,
   now,
   parents,
-  isAreaFull,
+  usedElsewhere,
   onSave,
   onDelete,
   onClose,
 }: AdjustDialogProps) {
   const [title, setTitle] = useState(win.title)
-  const [area, setArea] = useState<Area>(win.area)
+  const [category, setCategory] = useState<Category>(win.category)
   const [progress, setProgress] = useState(win.done ? 100 : win.progress ?? 0)
   const [note, setNote] = useState(win.note ?? '')
   const [one, setOne] = useState(win.one)
 
-  const t = AREA_THEME[area]
+  const t = CATEGORY_THEME[category]
   const parentName = parentScaleName(scale)
   const parent = win.parentId ? parents.find((w) => w.id === win.parentId) : undefined
-  const moveBlocked = area !== win.area && isAreaFull(area)
+  const moveBlocked = category !== win.category && usedElsewhere(category)
   const canSave = title.trim().length > 0 && !moveBlocked
 
   const target =
@@ -59,7 +59,7 @@ export function AdjustDialog({
   const save = () => {
     if (!canSave) return
     onSave(
-      { title: title.trim(), area, progress, note, done: progress >= 100 },
+      { title: title.trim(), category, progress, note, done: progress >= 100 },
       one,
     )
     onClose()
@@ -73,10 +73,10 @@ export function AdjustDialog({
       <div className="flex items-start justify-between border-b border-border-line bg-surface-container-low px-6 pt-5 pb-4">
         <div>
           <span
-            className={`mb-1.5 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-caption font-medium ${AREA_THEME[win.area].chipBg} ${AREA_THEME[win.area].chipBorder} ${AREA_THEME[win.area].text}`}
+            className={`mb-1.5 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-caption font-medium ${CATEGORY_THEME[win.category].chipBg} ${CATEGORY_THEME[win.category].chipBorder} ${CATEGORY_THEME[win.category].text}`}
           >
-            <span className={`h-1.5 w-1.5 rounded-full ${AREA_THEME[win.area].dot}`} />
-            {AREA_LABELS[win.area]} · Slot {slot} of 3
+            <Icon name={CATEGORY_META[win.category].icon} size={13} />
+            {CATEGORY_META[win.category].label} · Slot {slot} of 3
           </span>
           <h2 className="text-headline-sm font-medium tracking-tight text-fg-primary">
             Adjust Goal
@@ -94,29 +94,32 @@ export function AdjustDialog({
 
       {/* body */}
       <div className="max-h-[calc(85vh-160px)] space-y-5 overflow-y-auto px-6 py-5">
-        {/* category allocation */}
+        {/* category */}
         <div>
           <span className="mb-1.5 block text-title-section font-medium text-fg-primary">
-            Category Allocation
+            Category
           </span>
-          <div className="grid grid-cols-3 gap-2" role="group" aria-label="Category allocation">
-            {AREAS.map((a) => {
-              const at = AREA_THEME[a]
-              const selected = area === a
+          <div className="grid grid-cols-3 gap-2" role="group" aria-label="Category">
+            {CATEGORIES.map((c) => {
+              const ct = CATEGORY_THEME[c]
+              const selected = category === c
+              const inUse = c !== win.category && usedElsewhere(c)
               return (
                 <button
-                  key={a}
+                  key={c}
                   type="button"
                   aria-pressed={selected}
-                  onClick={() => setArea(a)}
+                  disabled={inUse}
+                  title={inUse ? 'Already used by another goal' : undefined}
+                  onClick={() => setCategory(c)}
                   className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-label-sm transition-colors ${
                     selected
-                      ? `border-2 ${at.strongBorder} ${at.chipBg} text-fg-primary`
+                      ? `border-2 ${ct.strongBorder} ${ct.chipBg} text-fg-primary`
                       : 'border border-border-line bg-surface-container-low text-fg-muted hover:border-fg-primary/40 hover:text-fg-primary'
-                  }`}
+                  } ${inUse ? 'cursor-not-allowed opacity-40' : ''}`}
                 >
-                  <span className={`h-2.5 w-2.5 rounded-full ${at.dot}`} />
-                  {AREA_LABELS[a]}
+                  <span className={`h-2.5 w-2.5 rounded-full ${ct.dot}`} />
+                  {CATEGORY_META[c].label}
                 </button>
               )
             })}
@@ -124,8 +127,8 @@ export function AdjustDialog({
           <p className="mt-1.5 flex items-center gap-1 text-caption text-fg-muted">
             <Icon name="info" size={14} />
             {moveBlocked
-              ? `${AREA_LABELS[area]} is at capacity. Finish or archive one of its goals first.`
-              : '3 goals maximum per category to preserve calm singular focus.'}
+              ? `${CATEGORY_META[category].label} is already used. Pick a free category.`
+              : 'One goal per category keeps your three balanced.'}
           </p>
         </div>
 
@@ -144,7 +147,7 @@ export function AdjustDialog({
             onChange={(e) => setTitle(e.target.value)}
             name="title"
             autoComplete="off"
-            className="w-full rounded-lg border border-border-line bg-surface-panel px-3.5 py-2.5 text-input-base text-fg-primary placeholder:text-fg-muted focus:border-area-career focus:ring-2 focus:ring-area-career/20 focus:outline-none"
+            className="w-full rounded-lg border border-border-line bg-surface-panel px-3.5 py-2.5 text-input-base text-fg-primary placeholder:text-fg-muted focus:border-cat-career focus:ring-2 focus:ring-cat-career/20 focus:outline-none"
           />
         </div>
 
@@ -190,7 +193,7 @@ export function AdjustDialog({
             aria-label="Progress percent"
             onChange={(e) => setProgress(Number(e.target.value))}
             className="w-full cursor-pointer"
-            style={{ accentColor: AREA_VAR[area] }}
+            style={{ accentColor: CATEGORY_VAR[category] }}
           />
 
           <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -208,7 +211,7 @@ export function AdjustDialog({
             <button
               type="button"
               onClick={() => setProgress(100)}
-              className={`ml-auto inline-flex items-center gap-1 rounded-md border px-3 py-1 text-label-sm font-medium transition-colors ${t.chipBorder} ${t.chipBg} ${t.text} hover:brightness-105`}
+              className={`ml-auto inline-flex items-center gap-1 rounded-md border px-3 py-1 text-label-sm font-medium transition-colors hover:brightness-105 ${t.chipBorder} ${t.chipBg} ${t.text}`}
             >
               <Icon name="check_circle" size={15} />
               Mark 100% (Done)
@@ -230,7 +233,7 @@ export function AdjustDialog({
               placeholder="e.g. Drafting section 2…"
               name="note"
               autoComplete="off"
-              className="w-full rounded-lg border border-border-line bg-surface-panel px-3 py-1.5 text-body-md text-fg-primary placeholder:text-fg-muted focus:border-area-career focus:ring-1 focus:ring-area-career/30 focus:outline-none"
+              className="w-full rounded-lg border border-border-line bg-surface-panel px-3 py-1.5 text-body-md text-fg-primary placeholder:text-fg-muted focus:border-cat-career focus:ring-1 focus:ring-cat-career/30 focus:outline-none"
             />
           </div>
         </div>
@@ -242,20 +245,20 @@ export function AdjustDialog({
             checked={one}
             onChange={(e) => setOne(e.target.checked)}
             className="mt-0.5 h-4 w-4"
-            style={{ accentColor: AREA_VAR[area] }}
+            style={{ accentColor: CATEGORY_VAR[category] }}
           />
           <span className="min-w-0 flex-1">
             <span className="mb-0.5 flex flex-wrap items-center gap-2">
               <span
-                className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-caption font-medium ${AREA_THEME[area].chipBg} ${AREA_THEME[area].chipBorder} ${AREA_THEME[area].text}`}
+                className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-caption font-medium ${t.chipBg} ${t.chipBorder} ${t.text}`}
               >
                 ★ The One · Pareto Filter
               </span>
               <span className="text-title-section font-medium text-fg-primary">Set as The One</span>
             </span>
             <span className="block text-caption leading-relaxed text-fg-muted">
-              Directs maximal leverage for {AREA_LABELS[area]}. Only one goal holds the star
-              to preserve singular focus.
+              Directs maximal leverage for {CATEGORY_META[category].label}. Only one goal holds
+              the star to preserve singular focus.
             </span>
           </span>
         </label>

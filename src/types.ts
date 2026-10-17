@@ -1,16 +1,14 @@
 export type Scale = 'd' | 'w' | 'm' | 'y'
 
-/** Career, Life & Vitality, Money */
-export type Area = 0 | 1 | 2
+/** Fixed palette of life categories (wheel-of-life domains). */
+export const CATEGORIES = ['health', 'family', 'career', 'money', 'growth', 'play'] as const
 
-export const AREAS: readonly Area[] = [0, 1, 2]
-
-export const AREA_LABELS = ['Career', 'Life & Vitality', 'Money'] as const
+export type Category = (typeof CATEGORIES)[number]
 
 export interface Win {
   id: string
   title: string
-  area: Area
+  category: Category
   /** win in the next larger scale */
   parentId?: string
   done: boolean

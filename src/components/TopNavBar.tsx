@@ -23,7 +23,7 @@ export function TopNavBar({ view, now, onView, settingsOpen, onToggleSettings }:
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border-line bg-bg-canvas">
+    <header className="sticky top-0 z-40 w-full bg-bg-canvas">
       <div className="mx-auto flex h-14 max-w-[720px] items-center justify-between px-margin">
         <div className="flex min-w-0 items-center gap-2">
           <span className="text-title-section font-medium tracking-tight whitespace-nowrap text-fg-primary">
