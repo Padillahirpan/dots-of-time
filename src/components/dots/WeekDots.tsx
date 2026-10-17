@@ -21,7 +21,7 @@ export function WeekDots({ now }: { now: Date }) {
             <span
               className={`text-caption transition-colors ${
                 today
-                  ? 'font-medium text-cat-career'
+                  ? 'font-medium text-accent'
                   : 'text-fg-muted group-hover:text-fg-primary'
               }`}
             >
@@ -38,7 +38,7 @@ export function WeekDots({ now }: { now: Date }) {
             />
             <span
               className={`text-[11px] ${
-                today ? 'font-medium text-cat-career' : 'text-fg-muted'
+                today ? 'font-medium text-accent' : 'text-fg-muted'
               }`}
             >
               {state}

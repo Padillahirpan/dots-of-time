@@ -1,4 +1,3 @@
-import { THEME_ORDER, useAppStore } from '../store/useAppStore'
 import type { Scale } from '../types'
 import { navContext } from '../lib/format'
 import { Icon } from './Icon'
@@ -12,16 +11,8 @@ interface TopNavBarProps {
   onToggleSettings: () => void
 }
 
-/** Sticky top bar: brand + scale tabs + theme and settings actions. */
+/** Sticky top bar: brand + scale tabs + settings action. */
 export function TopNavBar({ view, now, onView, settingsOpen, onToggleSettings }: TopNavBarProps) {
-  const theme = useAppStore((s) => s.theme)
-  const setTheme = useAppStore((s) => s.setTheme)
-
-  const cycleTheme = () => {
-    const next = THEME_ORDER[(THEME_ORDER.indexOf(theme) + 1) % THEME_ORDER.length]
-    setTheme(next)
-  }
-
   return (
     <header className="sticky top-0 z-40 w-full bg-bg-canvas">
       <div className="mx-auto flex h-14 max-w-[720px] items-center justify-between px-margin">
@@ -36,16 +27,7 @@ export function TopNavBar({ view, now, onView, settingsOpen, onToggleSettings }:
 
         <div className="flex items-center gap-3">
           <ScaleTabs value={view} onChange={onView} className="hidden sm:flex" />
-          <div className="flex items-center gap-1 border-l border-border-line pl-3">
-            <button
-              type="button"
-              onClick={cycleTheme}
-              title={`Cycle theme (current: ${theme})`}
-              aria-label={`Cycle theme, current ${theme}`}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-container-high hover:text-fg-primary"
-            >
-              <Icon name="palette" />
-            </button>
+          <div className="flex items-center border-l border-border-line pl-3">
             <button
               type="button"
               onClick={onToggleSettings}

@@ -12,7 +12,7 @@ import { WeekDots } from './components/dots/WeekDots'
 import { MonthDots } from './components/dots/MonthDots'
 import { YearDots } from './components/dots/YearDots'
 import { DimensionsSection } from './components/dimensions/DimensionsSection'
-import { SettingsPanel } from './components/SettingsPanel'
+import { SettingsDialog } from './components/dialogs/SettingsDialog'
 import { SiteFooter } from './components/SiteFooter'
 import { Toast } from './components/Toast'
 import {
@@ -47,7 +47,7 @@ const GRID_TITLE: Record<Scale, string> = {
 
 /** half-filled "current" legend swatch */
 const CURRENT_SWATCH =
-  'border border-cat-career bg-[linear-gradient(90deg,var(--cat-career)_50%,transparent_50%)]'
+  'border border-accent bg-[linear-gradient(90deg,var(--a)_50%,transparent_50%)]'
 
 function Pill({ children }: { children: string }) {
   return (
@@ -101,8 +101,8 @@ export default function App() {
       case 'y':
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full border border-border-line bg-bg-canvas px-2.5 py-1 text-caption whitespace-nowrap text-fg-primary">
-            <span className="h-2 w-2 rounded-full bg-cat-career" />
-            Current: Day {dayOfYear(now)} ({monthShort(now)} {now.getDate()})
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            Current: Day {dayOfYear(now)}
           </span>
         )
     }
@@ -113,22 +113,22 @@ export default function App() {
       case 'd': {
         const h = now.getHours()
         const items: LegendItem[] = [
-          { swatch: 'bg-cat-career', label: `Passed (${h} hours)` },
+          { swatch: 'bg-accent', label: `Passed (${h} hours)` },
           {
             swatch: CURRENT_SWATCH,
             label: `Current (${String(h).padStart(2, '0')}:00–${String((h + 1) % 24).padStart(2, '0')}:00)`,
             strong: true,
           },
-          { swatch: 'border border-cat-career/45', label: `Space remaining (${23 - h} hours open)` },
+          { swatch: 'border border-accent/45', label: `Space remaining (${23 - h} hours open)` },
         ]
         return <GridLegend items={items} />
       }
       case 'w': {
         const dayIdx = (now.getDay() + 6) % 7
         const items: LegendItem[] = [
-          { swatch: 'bg-cat-career', label: `Passed (${dayIdx} days)` },
+          { swatch: 'bg-accent', label: `Passed (${dayIdx} days)` },
           { swatch: CURRENT_SWATCH, label: `Today (${monthShort(now)} ${now.getDate()})` },
-          { swatch: 'border border-cat-career/50', label: `Space remaining (${6 - dayIdx} days)` },
+          { swatch: 'border border-accent/50', label: `Space remaining (${6 - dayIdx} days)` },
         ]
         return <GridLegend items={items} />
       }
@@ -136,9 +136,9 @@ export default function App() {
         const dim = now.getDate()
         const total = daysInMonth(now.getFullYear(), now.getMonth())
         const items: LegendItem[] = [
-          { swatch: 'bg-cat-career', label: `Passed (${dim - 1} days)` },
+          { swatch: 'bg-accent', label: `Passed (${dim - 1} days)` },
           { swatch: CURRENT_SWATCH, label: `Today (${monthShort(now)} ${dim})` },
-          { swatch: 'border border-cat-career/45', label: `Space remaining (${total - dim} days)` },
+          { swatch: 'border border-accent/45', label: `Space remaining (${total - dim} days)` },
         ]
         return <GridLegend items={items} />
       }
@@ -146,9 +146,9 @@ export default function App() {
         const doy = dayOfYear(now)
         const total = daysInYear(now.getFullYear())
         const items: LegendItem[] = [
-          { swatch: 'bg-cat-career', label: 'Passed', strong: true },
-          { swatch: 'bg-cat-career ring-2 ring-cat-career/30 ring-offset-1', label: 'Today', strong: true },
-          { swatch: 'border border-cat-career/50', label: 'Remaining', strong: true },
+          { swatch: 'bg-accent', label: 'Passed', strong: true },
+          { swatch: 'bg-accent ring-2 ring-accent/30 ring-offset-1', label: 'Today', strong: true },
+          { swatch: 'border border-accent/50', label: 'Remaining', strong: true },
         ]
         return (
           <GridLegend
@@ -210,7 +210,7 @@ export default function App() {
 
         {/* <GuidanceCard scale={view} stats={stats} /> */}
 
-        {settingsOpen && <SettingsPanel />}
+        {settingsOpen && <SettingsDialog onClose={() => setSettingsOpen(false)} />}
 
         <SiteFooter onShortcuts={showHelp} />
       </main>

@@ -1,4 +1,4 @@
-﻿interface PeriodHeaderProps {
+interface PeriodHeaderProps {
   variant: 'card' | 'plain'
   eyebrow?: string
   /** optional badge next to the headline, e.g. "Q4 · Autumn" */
@@ -26,7 +26,7 @@ export function PeriodHeader({
     <div className="min-w-0">
       {eyebrow && (
         <div className="mb-1 flex items-center gap-1.5 text-caption font-medium tracking-wider text-fg-muted uppercase">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cat-career" />
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
           <span>{eyebrow}</span>
         </div>
       )}
